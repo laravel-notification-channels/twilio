@@ -32,6 +32,6 @@ class CouldNotSendNotification extends \Exception
      */
     public static function missingFrom()
     {
-        return new static("Notification was not sent. Missing `from` number.");
+        return new static('Notification was not sent. Missing `from` number.');
     }
 }
