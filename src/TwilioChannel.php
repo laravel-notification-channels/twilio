@@ -4,8 +4,6 @@ namespace NotificationChannels\Twilio;
 
 use Exception;
 use Illuminate\Notifications\Notification;
-use NotificationChannels\Twilio\Events\MessageWasSent;
-use NotificationChannels\Twilio\Events\SendingMessage;
 use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
 use Services_Twilio;
 
