@@ -45,7 +45,7 @@ class TwilioChannel
     {
         if (! $to = $notifiable->routeNotificationFor('twilio')) {
             if (! $to = $notifiable->phone_number) {
-                return null;
+                return;
             }
         }
 
