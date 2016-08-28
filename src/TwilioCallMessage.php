@@ -2,7 +2,7 @@
 
 namespace NotificationChannels\Twilio;
 
-class TwilioCallMessage extends TwilioAbstractMessage
+class TwilioCallMessage extends TwilioMessage
 {
     /**
      * Set the message url.

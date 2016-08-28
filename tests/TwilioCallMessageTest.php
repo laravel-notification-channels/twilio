@@ -3,13 +3,9 @@
 namespace NotificationChannels\Twilio\Test;
 
 use NotificationChannels\Twilio\TwilioCallMessage;
-use PHPUnit_Framework_TestCase;
 
-class TwilioCallMessageTest extends PHPUnit_Framework_TestCase
+class TwilioCallMessageTest extends TwilioMessageTest
 {
-    /** @var \NotificationChannels\Twilio\TwilioCallMessage */
-    protected $message;
-
     public function setUp()
     {
         parent::setUp();
@@ -18,7 +14,7 @@ class TwilioCallMessageTest extends PHPUnit_Framework_TestCase
     }
 
     /** @test */
-    public function it_can_accept_an_url_when_constructing_a_message()
+    public function it_can_accept_a_message_when_constructing_a_message()
     {
         $message = new TwilioCallMessage('http://example.com');
 
@@ -39,13 +35,5 @@ class TwilioCallMessageTest extends PHPUnit_Framework_TestCase
         $this->message->url('http://example.com');
 
         $this->assertEquals('http://example.com', $this->message->content);
-    }
-
-    /** @test */
-    public function it_can_set_the_from()
-    {
-        $this->message->from('+1234567890');
-
-        $this->assertEquals('+1234567890', $this->message->from);
     }
 }

@@ -2,6 +2,6 @@
 
 namespace NotificationChannels\Twilio;
 
-class TwilioSmsMessage extends TwilioAbstractMessage
+class TwilioSmsMessage extends TwilioMessage
 {
 }

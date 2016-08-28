@@ -2,7 +2,7 @@
 
 namespace NotificationChannels\Twilio;
 
-abstract class TwilioAbstractMessage
+abstract class TwilioMessage
 {
     /**
      * The message content.
