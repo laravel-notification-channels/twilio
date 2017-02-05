@@ -2,8 +2,8 @@
 
 namespace NotificationChannels\Twilio;
 
-use Illuminate\Support\ServiceProvider;
 use Services_Twilio as TwilioService;
+use Illuminate\Support\ServiceProvider;
 
 class TwilioProvider extends ServiceProvider
 {
