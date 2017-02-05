@@ -18,10 +18,7 @@ class TwilioProvider extends ServiceProvider
                 $config = $this->app['config']['services.twilio'];
 
                 return new Twilio(
-                    $this->app->make(TwilioService::class, [
-                        $config['account_sid'],
-                        $config['auth_token'],
-                    ]),
+                    new TwilioService($config['account_sid'], $config['auth_token']),
                     $config['from']
                 );
             });
