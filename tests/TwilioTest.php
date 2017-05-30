@@ -100,10 +100,6 @@ class TwilioTest extends MockeryTestCase
     {
         $message = new TwilioSmsMessage('Message text');
 
-        $this->config->shouldReceive('getFrom')
-            ->once()
-            ->andReturn('+1234567890');
-
         $this->config->shouldReceive('getServiceSid')
             ->once()
             ->andReturn('service_sid');
@@ -111,7 +107,6 @@ class TwilioTest extends MockeryTestCase
         $this->twilioService->messages->shouldReceive('create')
             ->atLeast()->once()
             ->with('+1111111111', [
-                'from' => '+1234567890',
                 'body' => 'Message text',
                 'messagingServiceSid' => 'service_sid',
             ])
@@ -147,6 +142,10 @@ class TwilioTest extends MockeryTestCase
         $smsMessage = new TwilioSmsMessage('Message text');
 
         $this->config->shouldReceive('getFrom')
+            ->once()
+            ->andReturn(null);
+
+        $this->config->shouldReceive('getServiceSid')
             ->once()
             ->andReturn(null);
 

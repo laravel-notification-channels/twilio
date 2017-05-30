@@ -72,7 +72,6 @@ class IntegrationTest extends MockeryTestCase
         $channel = new TwilioChannel($twilio, $this->events);
 
         $this->smsMessageWillBeSentToTwilioWith('+22222222222', [
-            'from' => '+31612345678',
             'body' => 'Message text',
             'messagingServiceSid' => '0123456789',
         ]);
