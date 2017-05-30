@@ -2,8 +2,8 @@
 
 namespace NotificationChannels\Twilio;
 
-use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
 use Twilio\Rest\Client as TwilioService;
+use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
 
 class Twilio
 {
@@ -72,7 +72,7 @@ class Twilio
             $params['messagingServiceSid'] = $serviceSid;
         }
 
-        if (!isset($params['messagingServiceSid'])) {
+        if (! isset($params['messagingServiceSid'])) {
             $params['from'] = $this->getFrom($message);
         }
 

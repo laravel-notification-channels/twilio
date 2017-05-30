@@ -2,18 +2,18 @@
 
 namespace NotificationChannels\Twilio\Test;
 
-use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Notifications\Notification;
 use Mockery;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
-use NotificationChannels\Twilio\TwilioCallMessage;
-use NotificationChannels\Twilio\TwilioChannel;
-use NotificationChannels\Twilio\TwilioConfig;
-use NotificationChannels\Twilio\TwilioSmsMessage;
 use NotificationChannels\Twilio\Twilio;
 use Twilio\Rest\Client as TwilioService;
-use Twilio\Rest\Api\V2010\Account\MessageList;
+use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Events\Dispatcher;
 use Twilio\Rest\Api\V2010\Account\CallList;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use NotificationChannels\Twilio\TwilioConfig;
+use NotificationChannels\Twilio\TwilioChannel;
+use Twilio\Rest\Api\V2010\Account\MessageList;
+use NotificationChannels\Twilio\TwilioSmsMessage;
+use NotificationChannels\Twilio\TwilioCallMessage;
 
 class IntegrationTest extends MockeryTestCase
 {
