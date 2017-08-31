@@ -2,8 +2,8 @@
 
 namespace NotificationChannels\Twilio;
 
-use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
 use Twilio\Rest\Client as TwilioService;
+use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
 
 class Twilio
 {
@@ -65,12 +65,15 @@ class Twilio
     protected function sendSmsMessage(TwilioSmsMessage $message, $to)
     {
         $params = [
-            'from' => $this->getFrom($message),
             'body' => trim($message->content),
         ];
 
         if ($serviceSid = $this->config->getServiceSid()) {
             $params['messagingServiceSid'] = $serviceSid;
+        }
+
+        if (! isset($params['messagingServiceSid'])) {
+            $params['from'] = $this->getFrom($message);
         }
 
         return $this->twilioService->messages->create($to, $params);
