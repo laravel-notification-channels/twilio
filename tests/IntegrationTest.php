@@ -10,10 +10,12 @@ use NotificationChannels\Twilio\TwilioCallMessage;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioConfig;
 use NotificationChannels\Twilio\TwilioSmsMessage;
+use NotificationChannels\Twilio\TwilioNotifyMessage;
 use NotificationChannels\Twilio\Twilio;
 use Twilio\Rest\Client as TwilioService;
 use Twilio\Rest\Api\V2010\Account\MessageList;
 use Twilio\Rest\Api\V2010\Account\CallList;
+use Twilio\Rest\Notify\V1\ServiceList;
 
 class IntegrationTest extends MockeryTestCase
 {
@@ -33,6 +35,7 @@ class IntegrationTest extends MockeryTestCase
         $this->twilioService = Mockery::mock(TwilioService::class);
         $this->twilioService->messages = Mockery::mock(MessageList::class);
         $this->twilioService->calls = Mockery::mock(CallList::class);
+        $this->twilioService->notification = Mockery::mock(ServiceList::class);
 
         $this->events = Mockery::mock(Dispatcher::class);
         $this->notification = Mockery::mock(Notification::class);
@@ -102,6 +105,25 @@ class IntegrationTest extends MockeryTestCase
     }
 
     /** @test */
+    public function it_can_notify_a_sms_message()
+    {
+        $message = TwilioNotifyMessage::create('Message text');
+        $this->notification->shouldReceive('toTwilio')->andReturn($message);
+
+        $config = new TwilioConfig([
+            'service_sid' => '0123456789',
+        ]);
+        $twilio = new Twilio($this->twilioService, $config);
+        $channel = new TwilioChannel($twilio, $this->events);
+
+        $this->notifyMessageWillBeSentToTwilioWith('+22222222222', [
+            'body' => 'Message text',
+        ]);
+
+        $channel->send(new NotifiableWithAttribute(), $this->notification);
+    }
+
+    /** @test */
     public function it_can_make_a_call()
     {
         $message = TwilioCallMessage::create('http://example.com');
@@ -123,6 +145,14 @@ class IntegrationTest extends MockeryTestCase
     protected function smsMessageWillBeSentToTwilioWith(...$args)
     {
         $this->twilioService->messages->shouldReceive('create')
+            ->atLeast()->once()
+            ->with(...$args)
+            ->andReturn(true);
+    }
+
+    protected function notifyMessageWillBeSentToTwilioWith(...$args)
+    {
+        $this->twilioService->notification->shouldReceive('create')
             ->atLeast()->once()
             ->with(...$args)
             ->andReturn(true);

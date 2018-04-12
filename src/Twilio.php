@@ -47,11 +47,15 @@ class Twilio
 
             return $this->sendSmsMessage($message, $to);
         }
+       
+        if ($message instanceof TwilioNotifyMessage) {
+            return $this->notifyMessage($message, $to);
+        }
 
         if ($message instanceof TwilioCallMessage) {
             return $this->makeCall($message, $to);
         }
-
+        
         throw CouldNotSendNotification::invalidMessageObject($message);
     }
 
@@ -74,6 +78,27 @@ class Twilio
         }
 
         return $this->twilioService->messages->create($to, $params);
+    }
+
+    /**
+     * Send an notify message uing the Twilio service
+     *
+     * @param TwilioNotifyMessage $message
+     * @param string              $to
+     * @return \Twilio
+     */
+    protected function notifyMessage(TwilioNotifyMessage $message, $to)
+    {
+        $params = [
+            "toBinding" => '{"binding_type":"sms", "address":"'. $to .'"}',
+            'body' => trim($message->content)
+        ];
+
+        $serviceSid = $this->getServiceSid($message);
+
+        return $this->twilioService
+                ->notify->services($serviceSid)
+                ->notifications->create($params);
     }
 
     /**
@@ -118,5 +143,23 @@ class Twilio
         if ($sender = $this->config->getAlphanumericSender()) {
             return $sender;
         }
+    }
+
+    /**
+     * get service sid
+     *
+     * @param TwilioMessage $message
+     * @return string
+     * @throws CouldNotSendNotification
+     */
+    protected function getServiceSid(TwilioMessage $message)
+    {
+        if (! $serviceSid = $message->getServiceSid()) {
+            if (! $serviceSid = $this->config->getServiceSid()) {
+                throw CouldNotSendNotification::missingServiceSid();
+            }
+        }
+
+        return $serviceSid;
     }
 }

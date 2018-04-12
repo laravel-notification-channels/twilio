@@ -46,4 +46,11 @@ class CouldNotSendNotification extends \Exception
             'Notification was not sent. Missing `alphanumeric_sender` in config'
         );
     }
+
+    public static function missingServiceId()
+    {
+        return new static(
+            'Notification was not sent. Missing `Service ID` in config'
+        );
+    }
 }
