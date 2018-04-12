@@ -102,6 +102,29 @@ class AccountApproved extends Notification
 }
 ```
 
+And you can also just create a Twilio notify:
+
+``` php
+use NotificationChannels\Twilio\TwilioChannel;
+use NotificationChannels\Twilio\TwilioNotifyMessage;
+use Illuminate\Notifications\Notification;
+
+class AccountApproved extends Notification
+{
+    public function via($notifiable)
+    {
+        return [TwilioChannel::class];
+    }
+
+    public function toTwilio($notifiable)
+    {
+        return (new TwilioNotifyMessage())
+            // you can change the service sid,and default will use the config
+            // ->setServiceSid('Service Sid')
+            ->content('Yes! Your account was approved!');
+    }
+}
+```
 In order to let your Notification know which phone are you sending/calling to, the channel will look for the `phone_number` attribute of the Notifiable model. If you want to override this behaviour, add the `routeNotificationForTwilio` method to your Notifiable model.
 
 ```php
