@@ -47,10 +47,10 @@ class CouldNotSendNotification extends \Exception
         );
     }
 
-    public static function missingServiceId()
+    public static function missingServiceSid()
     {
         return new static(
-            'Notification was not sent. Missing `Service ID` in config'
+            'Notification was not sent. Missing `Service SID` in config'
         );
     }
 }
