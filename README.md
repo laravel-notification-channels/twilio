@@ -51,6 +51,7 @@ Add your Twilio Account SID, Auth Token, and From Number (optional) to your `con
 'twilio' => [
     'account_sid' => env('TWILIO_ACCOUNT_SID'),
     'auth_token' => env('TWILIO_AUTH_TOKEN'),
+    'service_sid' => env('TWILIO_SMS_SERVICE_SID'), // optional
     'from' => env('TWILIO_FROM'), // optional
 ],
 ...
@@ -125,6 +126,9 @@ class AccountApproved extends Notification
     }
 }
 ```
+In this case,don't need the `from`.  
+
+
 In order to let your Notification know which phone are you sending/calling to, the channel will look for the `phone_number` attribute of the Notifiable model. If you want to override this behaviour, add the `routeNotificationForTwilio` method to your Notifiable model.
 
 ```php
