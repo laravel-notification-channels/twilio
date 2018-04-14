@@ -2,8 +2,8 @@
 
 namespace NotificationChannels\Twilio\Exceptions;
 
-use NotificationChannels\Twilio\CallMessage;
 use NotificationChannels\Twilio\SmsMessage;
+use NotificationChannels\Twilio\CallMessage;
 
 class CouldNotSendNotification extends \Exception
 {

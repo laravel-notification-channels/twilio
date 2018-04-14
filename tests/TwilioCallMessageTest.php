@@ -6,6 +6,9 @@ use NotificationChannels\Twilio\TwilioCallMessage;
 
 class TwilioCallMessageTest extends TwilioMessageTest
 {
+    /** @var TwilioCallMessage */
+    protected $message;
+
     public function setUp()
     {
         parent::setUp();
@@ -35,5 +38,24 @@ class TwilioCallMessageTest extends TwilioMessageTest
         $this->message->url('http://example.com');
 
         $this->assertEquals('http://example.com', $this->message->content);
+    }
+
+    /** @test */
+    public function it_can_set_optional_parameters()
+    {
+        $message = TwilioCallMessage::create('myMessage');
+        $message->status(TwilioCallMessage::STATUS_CANCELED);
+        $message->method('PUT');
+        $message->statusCallback('http://example.com');
+        $message->statusCallbackMethod('PUT');
+        $message->fallbackUrl('http://example.com');
+        $message->fallbackMethod('PUT');
+
+        $this->assertEquals(TwilioCallMessage::STATUS_CANCELED, $message->status);
+        $this->assertEquals('PUT', $message->method);
+        $this->assertEquals('http://example.com', $message->statusCallback);
+        $this->assertEquals('PUT', $message->statusCallbackMethod);
+        $this->assertEquals('http://example.com', $message->fallbackUrl);
+        $this->assertEquals('PUT', $message->fallbackMethod);
     }
 }

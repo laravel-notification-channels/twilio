@@ -2,8 +2,8 @@
 
 namespace NotificationChannels\Twilio;
 
-use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
 use Twilio\Rest\Client as TwilioService;
+use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
 
 class Twilio
 {
@@ -21,7 +21,7 @@ class Twilio
      * Twilio constructor.
      *
      * @param  TwilioService $twilioService
-     * @param TwilioConfig   $config
+     * @param TwilioConfig $config
      */
     public function __construct(TwilioService $twilioService, TwilioConfig $config)
     {
@@ -33,8 +33,8 @@ class Twilio
      * Send a TwilioMessage to the a phone number.
      *
      * @param  TwilioMessage $message
-     * @param  string        $to
-     * @param bool           $useAlphanumericSender
+     * @param  string $to
+     * @param bool $useAlphanumericSender
      * @return mixed
      * @throws CouldNotSendNotification
      */
@@ -63,8 +63,9 @@ class Twilio
      * Send an sms message using the Twilio Service.
      *
      * @param TwilioSmsMessage $message
-     * @param string           $to
+     * @param string $to
      * @return \Twilio\Rest\Api\V2010\Account\MessageInstance
+     * @throws CouldNotSendNotification
      */
     protected function sendSmsMessage(TwilioSmsMessage $message, $to)
     {
@@ -75,6 +76,21 @@ class Twilio
 
         if ($service_sid = $this->config->getServiceSid()) {
             $params['messagingServiceSid'] = $service_sid;
+        }
+
+        $this->fillOptionalParams($params, $message, [
+            'statusCallback',
+            'statusCallbackMethod',
+            'applicationSid',
+            'maxPrice',
+            'provideFeedback',
+            'validityPeriod',
+        ]);
+
+        if ($message instanceof TwilioMmsMessage) {
+            $this->fillOptionalParams($params, $message, [
+                'mediaUrl',
+            ]);
         }
 
         return $this->twilioService->messages->create($to, $params);
@@ -105,15 +121,29 @@ class Twilio
      * Make a call using the Twilio Service.
      *
      * @param TwilioCallMessage $message
-     * @param string            $to
+     * @param string $to
      * @return \Twilio\Rest\Api\V2010\Account\CallInstance
+     * @throws CouldNotSendNotification
      */
     protected function makeCall(TwilioCallMessage $message, $to)
     {
+        $params = [
+            'url' => trim($message->content),
+        ];
+
+        $this->fillOptionalParams($params, $message, [
+            'statusCallback',
+            'statusCallbackMethod',
+            'method',
+            'status',
+            'fallbackUrl',
+            'fallbackMethod',
+        ]);
+
         return $this->twilioService->calls->create(
             $to,
             $this->getFrom($message),
-            ['url' => trim($message->content)]
+            $params
         );
     }
 
@@ -161,5 +191,19 @@ class Twilio
         }
 
         return $service_sid;
+    }
+    /**
+     * @param array $params
+     * @param TwilioMessage $message
+     * @param array $optionalParams
+     * @return mixed
+     */
+    protected function fillOptionalParams(&$params, $message, $optionalParams)
+    {
+        foreach ($optionalParams as $optionalParam) {
+            if ($message->$optionalParam) {
+                $params[$optionalParam] = $message->$optionalParam;
+            }
+        }
     }
 }

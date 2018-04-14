@@ -19,6 +19,16 @@ abstract class TwilioMessage
     public $from;
 
     /**
+     * @var null|string
+     */
+    public $statusCallback = null;
+
+    /**
+     * @var null|string
+     */
+    public $statusCallbackMethod = null;
+
+    /**
      * Create a message object.
      * @param string $content
      * @return static
@@ -72,5 +82,31 @@ abstract class TwilioMessage
     public function getFrom()
     {
         return $this->from;
+    }
+
+    /**
+     * Set the status callback.
+     *
+     * @param string $statusCallback
+     * @return $this
+     */
+    public function statusCallback($statusCallback)
+    {
+        $this->statusCallback = $statusCallback;
+
+        return $this;
+    }
+
+    /**
+     * Set the status callback request method.
+     *
+     * @param string $statusCallbackMethod
+     * @return $this
+     */
+    public function statusCallbackMethod($statusCallbackMethod)
+    {
+        $this->statusCallbackMethod = $statusCallbackMethod;
+
+        return $this;
     }
 }

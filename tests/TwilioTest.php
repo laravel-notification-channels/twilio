@@ -2,18 +2,19 @@
 
 namespace NotificationChannels\Twilio\Test;
 
-use Illuminate\Contracts\Events\Dispatcher;
 use Mockery;
-use Mockery\Adapter\Phpunit\MockeryTestCase;
-use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
-use NotificationChannels\Twilio\TwilioConfig;
-use NotificationChannels\Twilio\TwilioMessage;
-use NotificationChannels\Twilio\TwilioCallMessage;
-use NotificationChannels\Twilio\TwilioSmsMessage;
-use NotificationChannels\Twilio\Twilio;
 use Services_Twilio_Rest_Calls;
 use Services_Twilio_Rest_Messages;
+use NotificationChannels\Twilio\Twilio;
 use Twilio\Rest\Client as TwilioService;
+use Illuminate\Contracts\Events\Dispatcher;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
+use NotificationChannels\Twilio\TwilioConfig;
+use NotificationChannels\Twilio\TwilioMessage;
+use NotificationChannels\Twilio\TwilioMmsMessage;
+use NotificationChannels\Twilio\TwilioSmsMessage;
+use NotificationChannels\Twilio\TwilioCallMessage;
+use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
 
 class TwilioTest extends MockeryTestCase
 {
@@ -49,6 +50,12 @@ class TwilioTest extends MockeryTestCase
     public function it_can_send_a_sms_message_to_twilio()
     {
         $message = new TwilioSmsMessage('Message text');
+        $message->statusCallback('http://example.com');
+        $message->statusCallbackMethod('PUT');
+        $message->applicationSid('ABCD1234');
+        $message->maxPrice(0.05);
+        $message->provideFeedback(true);
+        $message->validityPeriod(120);
 
         $this->config->shouldReceive('getFrom')
             ->once()
@@ -63,6 +70,50 @@ class TwilioTest extends MockeryTestCase
             ->with('+1111111111', [
                 'from' => '+1234567890',
                 'body' => 'Message text',
+                'statusCallback' => 'http://example.com',
+                'statusCallbackMethod' => 'PUT',
+                'applicationSid' => 'ABCD1234',
+                'maxPrice' => 0.05,
+                'provideFeedback' => true,
+                'validityPeriod' => 120,
+            ])
+            ->andReturn(true);
+
+        $this->twilio->sendMessage($message, '+1111111111');
+    }
+
+    /** @test */
+    public function it_can_send_a_mms_message_to_twilio()
+    {
+        $message = new TwilioMmsMessage('Message text');
+        $message->statusCallback('http://example.com');
+        $message->statusCallbackMethod('PUT');
+        $message->applicationSid('ABCD1234');
+        $message->maxPrice(0.05);
+        $message->provideFeedback(true);
+        $message->validityPeriod(120);
+        $message->mediaUrl('http://example.com');
+
+        $this->config->shouldReceive('getFrom')
+            ->once()
+            ->andReturn('+1234567890');
+
+        $this->config->shouldReceive('getServiceSid')
+            ->once()
+            ->andReturn(null);
+
+        $this->twilioService->messages->shouldReceive('create')
+            ->atLeast()->once()
+            ->with('+1111111111', [
+                'from' => '+1234567890',
+                'body' => 'Message text',
+                'statusCallback' => 'http://example.com',
+                'statusCallbackMethod' => 'PUT',
+                'applicationSid' => 'ABCD1234',
+                'maxPrice' => 0.05,
+                'provideFeedback' => true,
+                'validityPeriod' => 120,
+                'mediaUrl' => 'http://example.com',
             ])
             ->andReturn(true);
 
@@ -125,11 +176,23 @@ class TwilioTest extends MockeryTestCase
     {
         $message = new TwilioCallMessage('http://example.com');
         $message->from = '+2222222222';
+        $message->status(TwilioCallMessage::STATUS_CANCELED);
+        $message->method('PUT');
+        $message->statusCallback('http://example.com');
+        $message->statusCallbackMethod('PUT');
+        $message->fallbackUrl('http://example.com');
+        $message->fallbackMethod('PUT');
 
         $this->twilioService->calls->shouldReceive('create')
             ->atLeast()->once()
             ->with('+1111111111', '+2222222222', [
                 'url' => 'http://example.com',
+                'status' => TwilioCallMessage::STATUS_CANCELED,
+                'method' => 'PUT',
+                'statusCallback' => 'http://example.com',
+                'statusCallbackMethod' => 'PUT',
+                'fallbackUrl' => 'http://example.com',
+                'fallbackMethod' => 'PUT',
             ])
             ->andReturn(true);
 

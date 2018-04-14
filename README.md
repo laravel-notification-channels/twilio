@@ -31,7 +31,7 @@ You can install the package via composer:
 composer require laravel-notification-channels/twilio
 ```
 
-You must install the service provider:
+Add the service provider (only required on Laravel 5.4 or lower):
 
 ```php
 // config/app.php
@@ -49,8 +49,10 @@ Add your Twilio Account SID, Auth Token, and From Number (optional) to your `con
 // config/services.php
 ...
 'twilio' => [
+    'username' => env('TWILIO_USERNAME'), // optional when using auth token
+    'password' => env('TWILIO_PASSWORD'), // optional when using auth token
+    'auth_token' => env('TWILIO_AUTH_TOKEN'), // optional when using username and password
     'account_sid' => env('TWILIO_ACCOUNT_SID'),
-    'auth_token' => env('TWILIO_AUTH_TOKEN'),
     'sms_service_sid' => env('TWILIO_SMS_SERVICE_SID'), // optional
     'from' => env('TWILIO_FROM'), // optional
 ],
@@ -81,7 +83,30 @@ class AccountApproved extends Notification
 }
 ```
 
-You can also create a Twilio call:
+You can also send an MMS:
+
+``` php
+use NotificationChannels\Twilio\TwilioChannel;
+use NotificationChannels\Twilio\TwilioMmsMessage;
+use Illuminate\Notifications\Notification;
+
+class AccountApproved extends Notification
+{
+    public function via($notifiable)
+    {
+        return [TwilioChannel::class];
+    }
+
+    public function toTwilio($notifiable)
+    {
+        return (new TwilioMmsMessage())
+            ->content("Your {$notifiable->service} account was approved!")
+            ->mediaUrl("https://picsum.photos/300");
+    }
+}
+```
+
+Or create a Twilio call:
 
 ``` php
 use NotificationChannels\Twilio\TwilioChannel;
@@ -103,7 +128,7 @@ class AccountApproved extends Notification
 }
 ```
 
-And you can also just create a Twilio notify:
+And you can also create a Twilio notify:
 
 ``` php
 use NotificationChannels\Twilio\TwilioChannel;
@@ -120,7 +145,7 @@ class AccountApproved extends Notification
     public function toTwilio($notifiable)
     {
         return (new TwilioNotifyMessage())
-            // you can change the service sid,and default will use the config
+            // you can change the service sid,and default will use the config's
             // ->setServiceSid('Service Sid')
             ->content('Yes! Your account was approved!');
     }
