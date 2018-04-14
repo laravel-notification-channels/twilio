@@ -73,8 +73,8 @@ class Twilio
             'body' => trim($message->content),
         ];
 
-        if ($serviceSid = $this->config->getServiceSid()) {
-            $params['messagingServiceSid'] = $serviceSid;
+        if ($service_sid = $this->config->getServiceSid()) {
+            $params['messagingServiceSid'] = $service_sid;
         }
 
         return $this->twilioService->messages->create($to, $params);
@@ -94,10 +94,10 @@ class Twilio
             'body' => trim($message->content)
         ];
 
-        $serviceSid = $this->getServiceSid($message);
+        $service_sid = $this->getServiceSid($message);
 
         return $this->twilioService
-                ->notify->services($serviceSid)
+                ->notify->services($service_sid)
                 ->notifications->create($params);
     }
 
@@ -154,12 +154,12 @@ class Twilio
      */
     protected function getServiceSid(TwilioMessage $message)
     {
-        if (! $serviceSid = $message->getServiceSid()) {
-            if (! $serviceSid = $this->config->getServiceSid()) {
+        if (! $service_sid = $message->getServiceSid()) {
+            if (! $service_sid = $this->config->getServiceSid()) {
                 throw CouldNotSendNotification::missingServiceSid();
             }
         }
 
-        return $serviceSid;
+        return $service_sid;
     }
 }

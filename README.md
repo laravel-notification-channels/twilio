@@ -51,7 +51,7 @@ Add your Twilio Account SID, Auth Token, and From Number (optional) to your `con
 'twilio' => [
     'account_sid' => env('TWILIO_ACCOUNT_SID'),
     'auth_token' => env('TWILIO_AUTH_TOKEN'),
-    'service_sid' => env('TWILIO_SMS_SERVICE_SID'), // optional
+    'sms_service_sid' => env('TWILIO_SMS_SERVICE_SID'), // optional
     'from' => env('TWILIO_FROM'), // optional
 ],
 ...
