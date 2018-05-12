@@ -1,13 +1,19 @@
 {
-    "name": "laravel-notification-channels/twilio",
-    "description": "A boilerplate for contributions.",
-    "homepage": "https://github.com/laravel-notification-channels/twilio",
+    "name": "chuoke/twilio",
+    "description": "A boilerplate for contributions.Forked from laravel-notification-channels/twilio",
+    "homepage": "https://github.com/chuoke/twilio",
     "license": "MIT",
     "authors": [
         {
             "name": "Gregorio Hernández Caso",
             "email": "gregoriohc@gmail.com",
             "homepage": "https://github.com/gregoriohc",
+            "role": "Developer"
+        },
+        {
+            "name": "chuoke",
+            "email": "gregoriohc@gmail.com",
+            "homepage": "https://github.com/chuoke",
             "role": "Developer"
         }
     ],
