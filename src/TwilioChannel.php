@@ -70,6 +70,7 @@ class TwilioChannel
      * Get the address to send a notification to.
      *
      * @param mixed $notifiable
+     * @param mixed $notification
      * @return mixed
      * @throws CouldNotSendNotification
      */
