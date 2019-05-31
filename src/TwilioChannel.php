@@ -43,7 +43,7 @@ class TwilioChannel
     public function send($notifiable, Notification $notification)
     {
         try {
-            $to = $this->getTo($notifiable);
+            $to = $this->getTo($notifiable, $notification);
             $message = $notification->toTwilio($notifiable);
             $useSender = $this->canReceiveAlphanumericSender($notifiable);
 
@@ -73,10 +73,10 @@ class TwilioChannel
      * @return mixed
      * @throws CouldNotSendNotification
      */
-    protected function getTo($notifiable)
+    protected function getTo($notifiable, $notification)
     {
         if ($notifiable->routeNotificationFor('twilio')) {
-            return $notifiable->routeNotificationFor('twilio', $notifiable);
+            return $notifiable->routeNotificationFor('twilio', $notification);
         }
         if (isset($notifiable->phone_number)) {
             return $notifiable->phone_number;
