@@ -76,7 +76,7 @@ class TwilioChannel
     protected function getTo($notifiable)
     {
         if ($notifiable->routeNotificationFor('twilio')) {
-            return $notifiable->routeNotificationFor('twilio');
+            return $notifiable->routeNotificationFor('twilio', $notifiable);
         }
         if (isset($notifiable->phone_number)) {
             return $notifiable->phone_number;
