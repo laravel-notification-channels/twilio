@@ -9,6 +9,12 @@
             "email": "gregoriohc@gmail.com",
             "homepage": "https://github.com/gregoriohc",
             "role": "Developer"
+        },
+        {
+            "name": "Elesei",
+            "email": "elesei@elesei.com",
+            "homepage": "https://github.com/elesei",
+            "role": "Developer"
         }
     ],
     "require": {
