@@ -20,10 +20,10 @@
     "require": {
         "php": ">=5.5.9",
         "twilio/sdk": "~5.16",
-        "illuminate/notifications": "^5.1",
-        "illuminate/support": "^5.1",
-        "illuminate/events": "^5.1",
-        "illuminate/queue": "^5.1"
+        "illuminate/notifications": "^6.0",
+        "illuminate/support": "^6.0",
+        "illuminate/events": "^6.0",
+        "illuminate/queue": "^6.0"
     },
     "require-dev": {
         "mockery/mockery": "^0.9.5",
