@@ -63,6 +63,9 @@ class TwilioChannel
             } else {
                 $this->events->fire($event);
             }
+
+            // Rethrow exception so that job status is handled
+            throw $exception;
         }
     }
 
