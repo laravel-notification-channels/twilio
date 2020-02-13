@@ -2,6 +2,8 @@
 
 namespace NotificationChannels\Twilio;
 
+use Illuminate\Support\Arr;
+
 class TwilioConfig
 {
     /**
@@ -91,5 +93,22 @@ class TwilioConfig
         if (isset($this->config['sms_service_sid'])) {
             return $this->config['sms_service_sid'];
         }
+    }
+
+    /**
+     * Returns list of codes for Twilio errors, which should be ignored (suppressed).
+     *
+     * @see https://www.twilio.com/docs/api/errors
+     *
+     * @return array
+     */
+    public function getIgnoredErrorCodes()
+    {
+        return Arr::get($this->config, 'ignored_error_codes', [
+            21608,
+            21211,
+            21614,
+            21408,
+        ]);
     }
 }

@@ -63,6 +63,8 @@ class TwilioChannel
             } else {
                 $this->events->fire($event);
             }
+
+            throw $exception;
         }
     }
 

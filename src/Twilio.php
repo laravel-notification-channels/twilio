@@ -2,6 +2,7 @@
 
 namespace NotificationChannels\Twilio;
 
+use Twilio\Exceptions\RestException;
 use Twilio\Rest\Client as TwilioService;
 use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
 
@@ -34,22 +35,31 @@ class Twilio
      *
      * @param  TwilioMessage $message
      * @param  string $to
-     * @param bool $useAlphanumericSender
-     * @return mixed
+     * @param  bool $useAlphanumericSender
+     * @return object|null
      * @throws \Twilio\Exceptions\TwilioException
      */
     public function sendMessage(TwilioMessage $message, $to, $useAlphanumericSender = false)
     {
-        if ($message instanceof TwilioSmsMessage) {
-            if ($useAlphanumericSender && $sender = $this->getAlphanumericSender()) {
-                $message->from($sender);
+        try {
+            if ($message instanceof TwilioSmsMessage) {
+                if ($useAlphanumericSender && $sender = $this->getAlphanumericSender()) {
+                    $message->from($sender);
+                }
+
+                return $this->sendSmsMessage($message, $to);
             }
 
-            return $this->sendSmsMessage($message, $to);
-        }
+            if ($message instanceof TwilioCallMessage) {
+                return $this->makeCall($message, $to);
+            }
+        } catch (RestException $e) {
+            // suppress ignored errors :
+            if (in_array($e->getCode(), $this->config->getIgnoredErrorCodes())) {
+                return null;
+            }
 
-        if ($message instanceof TwilioCallMessage) {
-            return $this->makeCall($message, $to);
+            throw $e;
         }
 
         throw CouldNotSendNotification::invalidMessageObject($message);
