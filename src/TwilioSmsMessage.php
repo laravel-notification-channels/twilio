@@ -20,6 +20,11 @@ class TwilioSmsMessage extends TwilioMessage
     public $applicationSid = null;
 
     /**
+     * @var null|bool
+     */
+    public $forceDelivery = null;
+
+    /**
      * @var null|float
      */
     public $maxPrice = null;
@@ -95,6 +100,19 @@ class TwilioSmsMessage extends TwilioMessage
     public function applicationSid($applicationSid)
     {
         $this->applicationSid = $applicationSid;
+
+        return $this;
+    }
+
+    /**
+     * Set force delivery (Deliver message without validation).
+     *
+     * @param bool $forceDelivery
+     * @return $this
+     */
+    public function forceDelivery($forceDelivery)
+    {
+        $this->forceDelivery = $forceDelivery;
 
         return $this;
     }
