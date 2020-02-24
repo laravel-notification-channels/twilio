@@ -1,6 +1,6 @@
 {
     "name": "laravel-notification-channels/twilio",
-    "description": "A boilerplate for contributions.",
+    "description": "Twilio Notification Driver for Laravel.",
     "homepage": "https://github.com/laravel-notification-channels/twilio",
     "license": "MIT",
     "authors": [
