@@ -94,6 +94,7 @@ class Twilio
             'statusCallback',
             'statusCallbackMethod',
             'applicationSid',
+            'forceDelivery',
             'maxPrice',
             'provideFeedback',
             'validityPeriod',

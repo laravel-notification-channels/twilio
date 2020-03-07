@@ -1,8 +1,12 @@
 {
     "name": "laravel-notification-channels/twilio",
-    "description": "A boilerplate for contributions.",
-    "homepage": "https://github.com/laravel-notification-channels/twilio",
+    "description": "Provides Twilio notification channel for Laravel.",
+    "keywords": ["laravel", "twilio", "notification", "sms", "call", "mms"],
     "license": "MIT",
+    "support": {
+        "issues": "https://github.com/laravel-notification-channels/twilio/issues",
+        "source": "https://github.com/laravel-notification-channels/twilio"
+    },
     "authors": [
         {
             "name": "Gregorio Hernández Caso",
@@ -14,10 +18,10 @@
     "require": {
         "php": ">=5.5.9",
         "twilio/sdk": "~5.16",
-        "illuminate/notifications": "^5.1|^6.0",
-        "illuminate/support": "^5.1|^6.0",
-        "illuminate/events": "^5.1|^6.0",
-        "illuminate/queue": "^5.1|^6.0"
+        "illuminate/notifications": "^5.1 || ^6.0",
+        "illuminate/support": "^5.1 || ^6.0",
+        "illuminate/events": "^5.1 || ^6.0",
+        "illuminate/queue": "^5.1 || ^6.0"
     },
     "require-dev": {
         "mockery/mockery": "^0.9.5",
