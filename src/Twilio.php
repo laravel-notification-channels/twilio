@@ -2,8 +2,8 @@
 
 namespace NotificationChannels\Twilio;
 
-use Twilio\Rest\Client as TwilioService;
 use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
+use Twilio\Rest\Client as TwilioService;
 
 class Twilio
 {
