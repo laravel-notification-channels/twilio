@@ -2,15 +2,15 @@
 
 namespace NotificationChannels\Twilio\Test;
 
-use Mockery;
-use NotificationChannels\Twilio\Twilio;
-use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Notifications\Events\NotificationFailed;
+use Illuminate\Notifications\Notification;
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use NotificationChannels\Twilio\Twilio;
+use NotificationChannels\Twilio\TwilioCallMessage;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioSmsMessage;
-use NotificationChannels\Twilio\TwilioCallMessage;
-use Illuminate\Notifications\Events\NotificationFailed;
 
 class TwilioChannelTest extends MockeryTestCase
 {
@@ -23,7 +23,7 @@ class TwilioChannelTest extends MockeryTestCase
     /** @var Dispatcher */
     protected $dispatcher;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

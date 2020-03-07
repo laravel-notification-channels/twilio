@@ -9,7 +9,7 @@ class TwilioCallMessageTest extends TwilioMessageTest
     /** @var TwilioCallMessage */
     protected $message;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

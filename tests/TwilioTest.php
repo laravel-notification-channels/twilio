@@ -2,19 +2,19 @@
 
 namespace NotificationChannels\Twilio\Test;
 
-use Mockery;
-use Services_Twilio_Rest_Calls;
-use Services_Twilio_Rest_Messages;
-use NotificationChannels\Twilio\Twilio;
-use Twilio\Rest\Client as TwilioService;
 use Illuminate\Contracts\Events\Dispatcher;
+use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
+use NotificationChannels\Twilio\Twilio;
+use NotificationChannels\Twilio\TwilioCallMessage;
 use NotificationChannels\Twilio\TwilioConfig;
 use NotificationChannels\Twilio\TwilioMessage;
 use NotificationChannels\Twilio\TwilioMmsMessage;
 use NotificationChannels\Twilio\TwilioSmsMessage;
-use NotificationChannels\Twilio\TwilioCallMessage;
-use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
+use Services_Twilio_Rest_Calls;
+use Services_Twilio_Rest_Messages;
+use Twilio\Rest\Client as TwilioService;
 
 class TwilioTest extends MockeryTestCase
 {
@@ -32,7 +32,7 @@ class TwilioTest extends MockeryTestCase
      */
     protected $config;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 
@@ -202,10 +202,8 @@ class TwilioTest extends MockeryTestCase
     /** @test */
     public function it_will_throw_an_exception_in_case_of_a_missing_from_number()
     {
-        $this->setExpectedException(
-            CouldNotSendNotification::class,
-            'Notification was not sent. Missing `from` number.'
-        );
+        $this->expectException(CouldNotSendNotification::class);
+        $this->expectExceptionMessage('Notification was not sent. Missing `from` number.');
 
         $smsMessage = new TwilioSmsMessage('Message text');
 
@@ -223,10 +221,8 @@ class TwilioTest extends MockeryTestCase
     /** @test */
     public function it_will_throw_an_exception_in_case_of_an_unrecognized_message_object()
     {
-        $this->setExpectedException(
-            CouldNotSendNotification::class,
-            'Notification was not sent. Message object class'
-        );
+        $this->expectException(CouldNotSendNotification::class);
+        $this->expectExceptionMessage('Notification was not sent. Message object class');
 
         $this->twilio->sendMessage(new InvalidMessage(), null);
     }

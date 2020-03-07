@@ -6,7 +6,7 @@ use NotificationChannels\Twilio\TwilioSmsMessage;
 
 class TwilioSmsMessageTest extends TwilioMessageTest
 {
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

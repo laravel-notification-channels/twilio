@@ -1,4 +1,4 @@
-# Twilio notifications channel for Laravel 5.3+
+# Twilio notifications channel for Laravel
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/laravel-notification-channels/twilio.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/twilio)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE.md)
@@ -8,7 +8,7 @@
 [![Code Coverage](https://img.shields.io/scrutinizer/coverage/g/laravel-notification-channels/twilio/master.svg?style=flat-square)](https://scrutinizer-ci.com/g/laravel-notification-channels/twilio/?branch=master)
 [![Total Downloads](https://img.shields.io/packagist/dt/laravel-notification-channels/twilio.svg?style=flat-square)](https://packagist.org/packages/laravel-notification-channels/twilio)
 
-This package makes it easy to send [Twilio notifications](https://documentation.twilio.com/docs) with Laravel 5.3.
+This package makes it easy to send [Twilio notifications](https://documentation.twilio.com/docs) with Laravel 5.5+, 6.x and 7.x
 
 ## Contents
 
@@ -29,16 +29,6 @@ You can install the package via composer:
 
 ``` bash
 composer require laravel-notification-channels/twilio
-```
-
-Add the service provider (only required on Laravel 5.4 or lower):
-
-```php
-// config/app.php
-'providers' => [
-    ...
-    NotificationChannels\Twilio\TwilioProvider::class,
-],
 ```
 
 ### Setting up your Twilio account
