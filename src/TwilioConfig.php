@@ -2,6 +2,8 @@
 
 namespace NotificationChannels\Twilio;
 
+use Illuminate\Support\Arr;
+
 class TwilioConfig
 {
     /**
@@ -72,24 +74,38 @@ class TwilioConfig
     /**
      * Get the alphanumeric sender.
      *
-     * @return string
+     * @return string|null
      */
     public function getAlphanumericSender()
     {
         if (isset($this->config['alphanumeric_sender'])) {
             return $this->config['alphanumeric_sender'];
         }
+
+        return null;
     }
 
     /**
      * Get the service sid.
      *
-     * @return string
+     * @return string|null
      */
     public function getServiceSid()
     {
         if (isset($this->config['sms_service_sid'])) {
             return $this->config['sms_service_sid'];
         }
+
+        return null;
+    }
+
+    /**
+     * Returns universal phone number, which should receive all outgoing messages and calls.
+     *
+     * @return string|null
+     */
+    public function getTo()
+    {
+        return Arr::get($this->config, 'to');
     }
 }

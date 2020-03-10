@@ -44,6 +44,10 @@ class TwilioTest extends MockeryTestCase
         $this->twilioService->calls = Mockery::mock(Services_Twilio_Rest_Calls::class);
 
         $this->twilio = new Twilio($this->twilioService, $this->config);
+
+        $this->config->shouldReceive('getTo')
+            ->byDefault()
+            ->andReturn(null);
     }
 
     /** @test */
@@ -225,6 +229,48 @@ class TwilioTest extends MockeryTestCase
         $this->expectExceptionMessage('Notification was not sent. Message object class');
 
         $this->twilio->sendMessage(new InvalidMessage(), null);
+    }
+
+    /** @test */
+    public function it_should_use_universal_to()
+    {
+        $universalTo = '+1222222222';
+
+        $message = new TwilioSmsMessage('Message text');
+        $message->statusCallback('http://example.com');
+        $message->statusCallbackMethod('PUT');
+        $message->applicationSid('ABCD1234');
+        $message->maxPrice(0.05);
+        $message->provideFeedback(true);
+        $message->validityPeriod(120);
+
+        $this->config->shouldReceive('getFrom')
+            ->once()
+            ->andReturn('+1234567890');
+
+        $this->config->shouldReceive('getTo')
+            ->once()
+            ->andReturn($universalTo);
+
+        $this->config->shouldReceive('getServiceSid')
+            ->once()
+            ->andReturn(null);
+
+        $this->twilioService->messages->shouldReceive('create')
+            ->atLeast()->once()
+            ->with($universalTo, [
+                'from' => '+1234567890',
+                'body' => 'Message text',
+                'statusCallback' => 'http://example.com',
+                'statusCallbackMethod' => 'PUT',
+                'applicationSid' => 'ABCD1234',
+                'maxPrice' => 0.05,
+                'provideFeedback' => true,
+                'validityPeriod' => 120,
+            ])
+            ->andReturn(true);
+
+        $this->twilio->sendMessage($message, '+1111111111');
     }
 }
 

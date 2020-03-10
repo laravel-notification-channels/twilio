@@ -40,6 +40,11 @@ class Twilio
      */
     public function sendMessage(TwilioMessage $message, $to, $useAlphanumericSender = false)
     {
+        $universalTo = $this->config->getTo();
+        if (! empty($universalTo)) {
+            $to = $universalTo;
+        }
+
         if ($message instanceof TwilioSmsMessage) {
             if ($useAlphanumericSender && $sender = $this->getAlphanumericSender()) {
                 $message->from($sender);
