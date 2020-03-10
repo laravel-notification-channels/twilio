@@ -5,8 +5,9 @@ namespace NotificationChannels\Twilio;
 use Illuminate\Support\Arr;
 use Illuminate\Support\ServiceProvider;
 use Twilio\Rest\Client as TwilioService;
+use Illuminate\Contracts\Support\DeferrableProvider;
 
-class TwilioProvider extends ServiceProvider
+class TwilioProvider extends ServiceProvider implements DeferrableProvider
 {
     /**
      * Bootstrap the application services.
@@ -30,11 +31,11 @@ class TwilioProvider extends ServiceProvider
                 $password = Arr::get($config, 'password');
 
                 return new TwilioService($username, $password, $account_sid);
-            } else {
-                $auth_token = Arr::get($config, 'auth_token');
-
-                return new TwilioService($account_sid, $auth_token);
             }
+
+            $auth_token = Arr::get($config, 'auth_token');
+
+            return new TwilioService($account_sid, $auth_token);
         });
     }
 
@@ -46,5 +47,19 @@ class TwilioProvider extends ServiceProvider
         $this->app->bind(TwilioConfig::class, function () {
             return new TwilioConfig($this->app['config']['services.twilio']);
         });
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return [
+            TwilioConfig::class,
+            TwilioService::class,
+            TwilioChannel::class,
+        ];
     }
 }
