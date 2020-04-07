@@ -11,7 +11,9 @@ use NotificationChannels\Twilio\TwilioCallMessage;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioConfig;
 use NotificationChannels\Twilio\TwilioSmsMessage;
+use Twilio\Rest\Api\V2010\Account\CallInstance;
 use Twilio\Rest\Api\V2010\Account\CallList;
+use Twilio\Rest\Api\V2010\Account\MessageInstance;
 use Twilio\Rest\Api\V2010\Account\MessageList;
 use Twilio\Rest\Client as TwilioService;
 
@@ -125,7 +127,7 @@ class IntegrationTest extends MockeryTestCase
         $this->twilioService->messages->shouldReceive('create')
             ->atLeast()->once()
             ->with(...$args)
-            ->andReturn(true);
+            ->andReturn(Mockery::mock(MessageInstance::class));
     }
 
     protected function callWillBeSentToTwilioWith(...$args)
@@ -133,6 +135,6 @@ class IntegrationTest extends MockeryTestCase
         $this->twilioService->calls->shouldReceive('create')
             ->atLeast()->once()
             ->with(...$args)
-            ->andReturn(true);
+            ->andReturn(Mockery::mock(CallInstance::class));
     }
 }
