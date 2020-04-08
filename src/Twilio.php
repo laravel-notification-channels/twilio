@@ -82,7 +82,7 @@ class Twilio
             $params['from'] = $from;
         }
 
-        if (! $from && ! $messagingServiceSid) {
+        if (empty($from) && empty($messagingServiceSid)) {
             throw CouldNotSendNotification::missingFrom();
         }
 

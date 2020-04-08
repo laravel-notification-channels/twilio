@@ -50,7 +50,7 @@ class TwilioSmsMessage extends TwilioMessage
             return $this->from;
         }
 
-        if ($this->alphaNumSender && $this->alphaNumSender !== '') {
+        if ($this->alphaNumSender !== null && $this->alphaNumSender !== '') {
             return $this->alphaNumSender;
         }
 
@@ -112,7 +112,7 @@ class TwilioSmsMessage extends TwilioMessage
      * @param bool $forceDelivery
      * @return $this
      */
-    public function forceDelivery(string $forceDelivery): self
+    public function forceDelivery(bool $forceDelivery): self
     {
         $this->forceDelivery = $forceDelivery;
 
