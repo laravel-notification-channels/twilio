@@ -7,7 +7,7 @@ class TwilioMmsMessage extends TwilioSmsMessage
     /**
      * @var string|null
      */
-    public $mediaUrl = null;
+    public $mediaUrl;
 
     /**
      * Set the message media url.
@@ -15,7 +15,7 @@ class TwilioMmsMessage extends TwilioSmsMessage
      * @param string $url
      * @return $this
      */
-    public function mediaUrl($url)
+    public function mediaUrl(string $url): self
     {
         $this->mediaUrl = $url;
 

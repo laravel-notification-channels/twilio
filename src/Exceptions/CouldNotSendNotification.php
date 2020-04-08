@@ -1,38 +1,28 @@
 <?php
+declare(strict_types=1);
 
 namespace NotificationChannels\Twilio\Exceptions;
 
-use NotificationChannels\Twilio\CallMessage;
-use NotificationChannels\Twilio\SmsMessage;
+use NotificationChannels\Twilio\TwilioCallMessage;
+use NotificationChannels\Twilio\TwilioSmsMessage;
 
 class CouldNotSendNotification extends \Exception
 {
-    /**
-     * @param mixed $message
-     *
-     * @return static
-     */
-    public static function invalidMessageObject($message)
+    public static function invalidMessageObject($message): self
     {
-        $className = get_class($message) ?: 'Unknown';
+        $className = is_object($message) ? get_class($message) : 'Unknown';
 
         return new static(
             "Notification was not sent. Message object class `{$className}` is invalid. It should
-            be either `".SmsMessage::class.'` or `'.CallMessage::class.'`');
+            be either `" . TwilioSmsMessage::class . '` or `' . TwilioCallMessage::class . '`');
     }
 
-    /**
-     * @return static
-     */
-    public static function missingFrom()
+    public static function missingFrom(): self
     {
         return new static('Notification was not sent. Missing `from` number.');
     }
 
-    /**
-     * @return static
-     */
-    public static function invalidReceiver()
+    public static function invalidReceiver(): self
     {
         return new static(
             'The notifiable did not have a receiving phone number. Add a routeNotificationForTwilio
@@ -40,7 +30,7 @@ class CouldNotSendNotification extends \Exception
         );
     }
 
-    public static function missingAlphaNumericSender()
+    public static function missingAlphaNumericSender(): self
     {
         return new static(
             'Notification was not sent. Missing `alphanumeric_sender` in config'

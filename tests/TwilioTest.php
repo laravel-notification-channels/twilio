@@ -12,8 +12,10 @@ use NotificationChannels\Twilio\TwilioConfig;
 use NotificationChannels\Twilio\TwilioMessage;
 use NotificationChannels\Twilio\TwilioMmsMessage;
 use NotificationChannels\Twilio\TwilioSmsMessage;
-use Services_Twilio_Rest_Calls;
-use Services_Twilio_Rest_Messages;
+use Twilio\Rest\Api\V2010\Account\CallInstance;
+use Twilio\Rest\Api\V2010\Account\CallList;
+use Twilio\Rest\Api\V2010\Account\MessageInstance;
+use Twilio\Rest\Api\V2010\Account\MessageList;
 use Twilio\Rest\Client as TwilioService;
 
 class TwilioTest extends MockeryTestCase
@@ -40,8 +42,8 @@ class TwilioTest extends MockeryTestCase
         $this->dispatcher = Mockery::mock(Dispatcher::class);
         $this->config = Mockery::mock(TwilioConfig::class);
 
-        $this->twilioService->messages = Mockery::mock(Services_Twilio_Rest_Messages::class);
-        $this->twilioService->calls = Mockery::mock(Services_Twilio_Rest_Calls::class);
+        $this->twilioService->messages = Mockery::mock(MessageList::class);
+        $this->twilioService->calls = Mockery::mock(CallList::class);
 
         $this->twilio = new Twilio($this->twilioService, $this->config);
     }
@@ -77,7 +79,7 @@ class TwilioTest extends MockeryTestCase
                 'provideFeedback' => true,
                 'validityPeriod' => 120,
             ])
-            ->andReturn(true);
+            ->andReturn(Mockery::mock(MessageInstance::class));
 
         $this->twilio->sendMessage($message, '+1111111111');
     }
@@ -115,7 +117,7 @@ class TwilioTest extends MockeryTestCase
                 'validityPeriod' => 120,
                 'mediaUrl' => 'http://example.com',
             ])
-            ->andReturn(true);
+            ->andReturn(Mockery::mock(MessageInstance::class));
 
         $this->twilio->sendMessage($message, '+1111111111');
     }
@@ -141,7 +143,7 @@ class TwilioTest extends MockeryTestCase
                 'from' => 'TwilioTest',
                 'body' => 'Message text',
             ])
-            ->andReturn(true);
+            ->andReturn(Mockery::mock(MessageInstance::class));
 
         $this->twilio->sendMessage($message, '+1111111111', true);
     }
@@ -166,7 +168,7 @@ class TwilioTest extends MockeryTestCase
                 'body' => 'Message text',
                 'messagingServiceSid' => 'service_sid',
             ])
-            ->andReturn(true);
+            ->andReturn(Mockery::mock(MessageInstance::class));
 
         $this->twilio->sendMessage($message, '+1111111111');
     }
@@ -194,7 +196,7 @@ class TwilioTest extends MockeryTestCase
                 'fallbackUrl' => 'http://example.com',
                 'fallbackMethod' => 'PUT',
             ])
-            ->andReturn(true);
+            ->andReturn(Mockery::mock(CallInstance::class));
 
         $this->twilio->sendMessage($message, '+1111111111');
     }

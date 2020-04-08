@@ -7,52 +7,54 @@ class TwilioSmsMessage extends TwilioMessage
     /**
      * @var null|string
      */
-    public $alphaNumSender = null;
+    public $alphaNumSender;
 
     /**
      * @var null|string
      */
-    public $messagingServiceSid = null;
+    public $messagingServiceSid;
 
     /**
      * @var null|string
      */
-    public $applicationSid = null;
+    public $applicationSid;
 
     /**
      * @var null|bool
      */
-    public $forceDelivery = null;
+    public $forceDelivery;
 
     /**
      * @var null|float
      */
-    public $maxPrice = null;
+    public $maxPrice;
 
     /**
      * @var null|bool
      */
-    public $provideFeedback = null;
+    public $provideFeedback;
 
     /**
      * @var null|int
      */
-    public $validityPeriod = null;
+    public $validityPeriod;
 
     /**
      * Get the from address of this message.
      *
      * @return null|string
      */
-    public function getFrom()
+    public function getFrom(): ?string
     {
         if ($this->from) {
             return $this->from;
         }
 
-        if ($this->alphaNumSender && strlen($this->alphaNumSender) > 0) {
+        if ($this->alphaNumSender && $this->alphaNumSender !== '') {
             return $this->alphaNumSender;
         }
+
+        return null;
     }
 
     /**
@@ -61,7 +63,7 @@ class TwilioSmsMessage extends TwilioMessage
      * @param  string $messagingServiceSid
      * @return $this
      */
-    public function messagingServiceSid($messagingServiceSid)
+    public function messagingServiceSid(string $messagingServiceSid): self
     {
         $this->messagingServiceSid = $messagingServiceSid;
 
@@ -73,7 +75,7 @@ class TwilioSmsMessage extends TwilioMessage
      *
      * @return null|string
      */
-    public function getMessagingServiceSid()
+    public function getMessagingServiceSid(): ?string
     {
         return $this->messagingServiceSid;
     }
@@ -84,7 +86,7 @@ class TwilioSmsMessage extends TwilioMessage
      * @param string $sender
      * @return $this
      */
-    public function sender($sender)
+    public function sender(string $sender): self
     {
         $this->alphaNumSender = $sender;
 
@@ -97,7 +99,7 @@ class TwilioSmsMessage extends TwilioMessage
      * @param string $applicationSid
      * @return $this
      */
-    public function applicationSid($applicationSid)
+    public function applicationSid(string $applicationSid): self
     {
         $this->applicationSid = $applicationSid;
 
@@ -110,7 +112,7 @@ class TwilioSmsMessage extends TwilioMessage
      * @param bool $forceDelivery
      * @return $this
      */
-    public function forceDelivery($forceDelivery)
+    public function forceDelivery(string $forceDelivery): self
     {
         $this->forceDelivery = $forceDelivery;
 
@@ -123,7 +125,7 @@ class TwilioSmsMessage extends TwilioMessage
      * @param float $maxPrice
      * @return $this
      */
-    public function maxPrice($maxPrice)
+    public function maxPrice(float $maxPrice): self
     {
         $this->maxPrice = $maxPrice;
 
@@ -136,7 +138,7 @@ class TwilioSmsMessage extends TwilioMessage
      * @param bool $provideFeedback
      * @return $this
      */
-    public function provideFeedback($provideFeedback)
+    public function provideFeedback(bool $provideFeedback): self
     {
         $this->provideFeedback = $provideFeedback;
 
@@ -146,12 +148,13 @@ class TwilioSmsMessage extends TwilioMessage
     /**
      * Set the validity period (in seconds).
      *
-     * @param int $validityPeriod
+     * @param int $validityPeriodSeconds
+     *
      * @return $this
      */
-    public function validityPeriod($validityPeriod)
+    public function validityPeriod(int $validityPeriodSeconds): self
     {
-        $this->validityPeriod = $validityPeriod;
+        $this->validityPeriod = $validityPeriodSeconds;
 
         return $this;
     }

@@ -1,6 +1,6 @@
 {
     "name": "laravel-notification-channels/twilio",
-    "description": "Provides Twilio notification channel for Laravel.",
+    "description": "Provides Twilio notification channel for Laravel",
     "keywords": ["laravel", "twilio", "notification", "sms", "call", "mms"],
     "license": "MIT",
     "support": {
@@ -12,6 +12,12 @@
             "name": "Gregorio Hernández Caso",
             "email": "gregoriohc@gmail.com",
             "homepage": "https://github.com/gregoriohc",
+            "role": "Developer"
+        },
+        {
+            "name": "atymic",
+            "email": "atymicq@gmail.com",
+            "homepage": "https://atymic.dev",
             "role": "Developer"
         }
     ],

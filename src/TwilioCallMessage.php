@@ -4,28 +4,28 @@ namespace NotificationChannels\Twilio;
 
 class TwilioCallMessage extends TwilioMessage
 {
-    const STATUS_CANCELED = 'canceled';
-    const STATUS_COMPLETED = 'completed';
+    public const STATUS_CANCELED = 'canceled';
+    public const STATUS_COMPLETED = 'completed';
 
     /**
      * @var null|string
      */
-    public $method = null;
+    public $method;
 
     /**
      * @var null|string
      */
-    public $status = null;
+    public $status;
 
     /**
      * @var null|string
      */
-    public $fallbackUrl = null;
+    public $fallbackUrl;
 
     /**
      * @var null|string
      */
-    public $fallbackMethod = null;
+    public $fallbackMethod;
 
     /**
      * Set the message url.
@@ -33,7 +33,7 @@ class TwilioCallMessage extends TwilioMessage
      * @param  string $url
      * @return $this
      */
-    public function url($url)
+    public function url(string $url): self
     {
         $this->content = $url;
 
@@ -46,7 +46,7 @@ class TwilioCallMessage extends TwilioMessage
      * @param  string $method
      * @return $this
      */
-    public function method($method)
+    public function method($method): self
     {
         $this->method = $method;
 
@@ -59,7 +59,7 @@ class TwilioCallMessage extends TwilioMessage
      * @param  string $status
      * @return $this
      */
-    public function status($status)
+    public function status(string $status): self
     {
         $this->status = $status;
 
@@ -72,7 +72,7 @@ class TwilioCallMessage extends TwilioMessage
      * @param string $fallbackUrl
      * @return $this
      */
-    public function fallbackUrl($fallbackUrl)
+    public function fallbackUrl(string $fallbackUrl): self
     {
         $this->fallbackUrl = $fallbackUrl;
 
@@ -85,7 +85,7 @@ class TwilioCallMessage extends TwilioMessage
      * @param string $fallbackMethod
      * @return $this
      */
-    public function fallbackMethod($fallbackMethod)
+    public function fallbackMethod(string $fallbackMethod): self
     {
         $this->fallbackMethod = $fallbackMethod;
 

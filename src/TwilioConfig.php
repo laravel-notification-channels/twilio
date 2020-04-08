@@ -4,14 +4,10 @@ namespace NotificationChannels\Twilio;
 
 class TwilioConfig
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     private $config;
 
     /**
-     * TwilioConfig constructor.
-     *
      * @param array $config
      */
     public function __construct(array $config)
@@ -19,77 +15,58 @@ class TwilioConfig
         $this->config = $config;
     }
 
-    /**
-     * Get the auth token.
-     *
-     * @return string
-     */
-    public function getAuthToken()
+    public function usingUsernamePasswordAuth(): bool
     {
-        return $this->config['auth_token'];
+        return $this->getUsername() !== null && $this->getPassword() !== null && $this->getAccountSid() !== null;
     }
 
-    /**
-     * Get the username.
-     *
-     * @return string
-     */
-    public function getUsername()
+    public function usingTokenAuth(): bool
     {
-        return $this->config['username'];
+        return $this->getAuthToken() !== null && $this->getAccountSid() !== null;
     }
 
-    /**
-     * Get the password.
-     *
-     * @return string
-     */
-    public function getPassword()
+    public function getAuthToken(): ?string
     {
-        return $this->config['password'];
+        return $this->config['auth_token'] ?? null;
     }
 
-    /**
-     * Get the account sid.
-     *
-     * @return string
-     */
-    public function getAccountSid()
+    public function getUsername(): ?string
     {
-        return $this->config['account_sid'];
+        return $this->config['username'] ?? null;
     }
 
-    /**
-     * Get the default from address.
-     *
-     * @return string
-     */
-    public function getFrom()
+    public function getPassword(): ?string
     {
-        return $this->config['from'];
+        return $this->config['password'] ?? null;
     }
 
-    /**
-     * Get the alphanumeric sender.
-     *
-     * @return string
-     */
-    public function getAlphanumericSender()
+    public function getAccountSid(): ?string
     {
-        if (isset($this->config['alphanumeric_sender'])) {
-            return $this->config['alphanumeric_sender'];
-        }
+        return $this->config['account_sid'] ?? null;
     }
 
-    /**
-     * Get the service sid.
-     *
-     * @return string
-     */
-    public function getServiceSid()
+    public function getFrom(): ?string
     {
-        if (isset($this->config['sms_service_sid'])) {
-            return $this->config['sms_service_sid'];
-        }
+        return $this->config['from'] ?? null;
+    }
+
+    public function getAlphanumericSender(): ?string
+    {
+        return $this->config['alphanumeric_sender'] ?? null;
+    }
+
+    public function getServiceSid(): ?string
+    {
+        return $this->config['sms_service_sid'] ?? null;
+    }
+
+    public function getIgnoredErrorCodes(): array
+    {
+        return $this->config['ignored_error_codes'] ?? [];
+    }
+
+    public function isIgnoredErrorCode(int $code): bool
+    {
+        return in_array($code, $this->getIgnoredErrorCodes(), true);
     }
 }

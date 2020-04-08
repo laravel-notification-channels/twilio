@@ -7,6 +7,7 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Notifications\Events\NotificationFailed;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
+use Twilio\Exceptions\RestException;
 
 class TwilioChannel
 {
@@ -35,8 +36,9 @@ class TwilioChannel
     /**
      * Send the given notification.
      *
-     * @param  mixed                                  $notifiable
-     * @param  \Illuminate\Notifications\Notification $notification
+     * @param mixed                                  $notifiable
+     * @param \Illuminate\Notifications\Notification $notification
+     *
      * @return mixed
      * @throws CouldNotSendNotification
      */
@@ -51,7 +53,7 @@ class TwilioChannel
                 $message = new TwilioSmsMessage($message);
             }
 
-            if (! $message instanceof TwilioMessage) {
+            if (!$message instanceof TwilioMessage) {
                 throw CouldNotSendNotification::invalidMessageObject($message);
             }
 
@@ -70,6 +72,7 @@ class TwilioChannel
      * Get the address to send a notification to.
      *
      * @param mixed $notifiable
+     *
      * @return mixed
      * @throws CouldNotSendNotification
      */
@@ -89,12 +92,13 @@ class TwilioChannel
      * Get the alphanumeric sender.
      *
      * @param $notifiable
+     *
      * @return mixed|null
      * @throws CouldNotSendNotification
      */
     protected function canReceiveAlphanumericSender($notifiable)
     {
         return method_exists($notifiable, 'canReceiveAlphanumericSender') &&
-        $notifiable->canReceiveAlphanumericSender();
+            $notifiable->canReceiveAlphanumericSender();
     }
 }

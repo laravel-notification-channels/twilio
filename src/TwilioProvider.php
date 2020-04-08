@@ -2,11 +2,13 @@
 
 namespace NotificationChannels\Twilio;
 
-use Illuminate\Support\Arr;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
+use NotificationChannels\Twilio\Exceptions\InvalidConfigException;
 use Twilio\Rest\Client as TwilioService;
 
-class TwilioProvider extends ServiceProvider
+class TwilioProvider extends ServiceProvider implements DeferrableProvider
 {
     /**
      * Bootstrap the application services.
@@ -22,19 +24,19 @@ class TwilioProvider extends ServiceProvider
                 );
             });
 
-        $this->app->bind(TwilioService::class, function () {
-            $config = $this->app['config']['services.twilio'];
-            $account_sid = Arr::get($config, 'account_sid');
-            $username = Arr::get($config, 'username');
-            if (! empty($username)) {
-                $password = Arr::get($config, 'password');
+        $this->app->bind(TwilioService::class, function (Application $app) {
+            /** @var TwilioConfig $config */
+            $config = $app->make(TwilioConfig::class);
 
-                return new TwilioService($username, $password, $account_sid);
-            } else {
-                $auth_token = Arr::get($config, 'auth_token');
-
-                return new TwilioService($account_sid, $auth_token);
+            if ($config->usingUsernamePasswordAuth()) {
+                return new TwilioService($config->getUsername(), $config->getPassword(), $config->getAccountSid());
             }
+
+            if ($config->usingTokenAuth()) {
+                return new TwilioService($config->getAccountSid(), $config->getAuthToken());
+            }
+
+            throw InvalidConfigException::missingConfig();
         });
     }
 
@@ -44,7 +46,21 @@ class TwilioProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(TwilioConfig::class, function () {
-            return new TwilioConfig($this->app['config']['services.twilio']);
+            return new TwilioConfig($this->app['config']['twilio-notification-channel']);
         });
+    }
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides(): array
+    {
+        return [
+            TwilioConfig::class,
+            TwilioService::class,
+            TwilioChannel::class,
+        ];
     }
 }

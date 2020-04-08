@@ -21,19 +21,19 @@ abstract class TwilioMessage
     /**
      * @var null|string
      */
-    public $statusCallback = null;
+    public $statusCallback;
 
     /**
      * @var null|string
      */
-    public $statusCallbackMethod = null;
+    public $statusCallbackMethod;
 
     /**
      * Create a message object.
      * @param string $content
      * @return static
      */
-    public static function create($content = '')
+    public static function create(string $content = ''): self
     {
         return new static($content);
     }
@@ -43,7 +43,7 @@ abstract class TwilioMessage
      *
      * @param  string $content
      */
-    public function __construct($content = '')
+    public function __construct(string $content = '')
     {
         $this->content = $content;
     }
@@ -54,7 +54,7 @@ abstract class TwilioMessage
      * @param  string $content
      * @return $this
      */
-    public function content($content)
+    public function content(string $content): self
     {
         $this->content = $content;
 
@@ -67,7 +67,7 @@ abstract class TwilioMessage
      * @param  string $from
      * @return $this
      */
-    public function from($from)
+    public function from(string $from): self
     {
         $this->from = $from;
 
@@ -77,9 +77,9 @@ abstract class TwilioMessage
     /**
      * Get the from address.
      *
-     * @return string
+     * @return string|null
      */
-    public function getFrom()
+    public function getFrom(): ?string
     {
         return $this->from;
     }
@@ -90,7 +90,7 @@ abstract class TwilioMessage
      * @param string $statusCallback
      * @return $this
      */
-    public function statusCallback($statusCallback)
+    public function statusCallback(string $statusCallback): self
     {
         $this->statusCallback = $statusCallback;
 
@@ -103,7 +103,7 @@ abstract class TwilioMessage
      * @param string $statusCallbackMethod
      * @return $this
      */
-    public function statusCallbackMethod($statusCallbackMethod)
+    public function statusCallbackMethod(string $statusCallbackMethod): self
     {
         $this->statusCallbackMethod = $statusCallbackMethod;
 

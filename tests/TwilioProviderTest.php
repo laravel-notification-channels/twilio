@@ -44,7 +44,7 @@ class TwilioProviderTest extends MockeryTestCase
             ]);
 
         $twilio = Mockery::mock(TwilioService::class);
-        $config = Mockery::mock(TwilioConfig::class, $configArray);
+        $config = new TwilioConfig($configArray);
 
         $this->app->shouldReceive('make')->with(TwilioConfig::class)->andReturn($config);
         $this->app->shouldReceive('make')->with(TwilioService::class)->andReturn($twilio);
@@ -56,7 +56,7 @@ class TwilioProviderTest extends MockeryTestCase
         }))->once();
 
         $this->app->shouldReceive('bind')->with(TwilioService::class, Mockery::on(function ($twilio) {
-            return  $twilio() instanceof TwilioService;
+            return $twilio($this->app) instanceof TwilioService;
         }))->once()->andReturn($this->app);
 
         $this->provider->boot();
@@ -79,7 +79,7 @@ class TwilioProviderTest extends MockeryTestCase
             ]);
 
         $twilio = Mockery::mock(TwilioService::class);
-        $config = Mockery::mock(TwilioConfig::class, $configArray);
+        $config = new TwilioConfig($configArray);
 
         $this->app->shouldReceive('make')->with(TwilioConfig::class)->andReturn($config);
         $this->app->shouldReceive('make')->with(TwilioService::class)->andReturn($twilio);
@@ -91,7 +91,7 @@ class TwilioProviderTest extends MockeryTestCase
         }))->once();
 
         $this->app->shouldReceive('bind')->with(TwilioService::class, Mockery::on(function ($twilio) {
-            return  $twilio() instanceof TwilioService;
+            return  $twilio($this->app) instanceof TwilioService;
         }))->once()->andReturn($this->app);
 
         $this->provider->boot();
