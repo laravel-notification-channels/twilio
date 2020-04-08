@@ -33,19 +33,22 @@ composer require laravel-notification-channels/twilio
 
 ### Setting up your Twilio account
 
-Add your Twilio Account SID, Auth Token, and From Number (optional) to your `config/services.php`:
+Add your Twilio Account SID, Auth Token, and From Number (optional) to your `.env`:
 
-```php
-// config/services.php
-...
-'twilio' => [
-    'username' => env('TWILIO_USERNAME'), // optional when using auth token
-    'password' => env('TWILIO_PASSWORD'), // optional when using auth token
-    'auth_token' => env('TWILIO_AUTH_TOKEN'), // optional when using username and password
-    'account_sid' => env('TWILIO_ACCOUNT_SID'),
-    'from' => env('TWILIO_FROM'), // optional
-],
-...
+```dotenv
+TWILIO_USERNAME=XYZ # optional when using auth token
+TWILIO_PASSWORD=ZYX # optional when using auth token
+TWILIO_AUTH_TOKEN=ABCD # optional when using username and password
+TWILIO_ACCOUNT_SID=1234 # always required
+TWILIO_FROM=100000000 # otional default from
+TWILIO_ALPHA_SENDER=HELLO # optional
+```
+
+### Advanced configuration
+
+Run `php artisan vendor:publish --provider="NotificationChannels\Twilio\TwilioProvider"`
+```
+/config/twilio-notification-channel.php
 ```
 
 ## Usage

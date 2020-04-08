@@ -45,6 +45,12 @@ class TwilioProvider extends ServiceProvider implements DeferrableProvider
      */
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/../config/twilio-notification-channel.php', '');
+
+        $this->publishes([
+            __DIR__.'/../config/twilio-notification-channel.php' => config_path('twilio-notification-channel.php'),
+        ]);
+
         $this->app->bind(TwilioConfig::class, function () {
             return new TwilioConfig($this->app['config']['twilio-notification-channel']);
         });
