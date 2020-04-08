@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace NotificationChannels\Twilio\Exceptions;
@@ -14,7 +15,7 @@ class CouldNotSendNotification extends \Exception
 
         return new static(
             "Notification was not sent. Message object class `{$className}` is invalid. It should
-            be either `" . TwilioSmsMessage::class . '` or `' . TwilioCallMessage::class . '`');
+            be either `".TwilioSmsMessage::class.'` or `'.TwilioCallMessage::class.'`');
     }
 
     public static function missingFrom(): self

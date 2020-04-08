@@ -7,7 +7,6 @@ use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Notifications\Events\NotificationFailed;
 use Illuminate\Notifications\Notification;
 use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
-use Twilio\Exceptions\RestException;
 
 class TwilioChannel
 {
@@ -53,7 +52,7 @@ class TwilioChannel
                 $message = new TwilioSmsMessage($message);
             }
 
-            if (!$message instanceof TwilioMessage) {
+            if (! $message instanceof TwilioMessage) {
                 throw CouldNotSendNotification::invalidMessageObject($message);
             }
 

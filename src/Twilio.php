@@ -3,7 +3,6 @@
 namespace NotificationChannels\Twilio;
 
 use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
-use Twilio\Exceptions\RestException;
 use Twilio\Exceptions\TwilioException;
 use Twilio\Rest\Api\V2010\Account\CallInstance;
 use Twilio\Rest\Api\V2010\Account\MessageInstance;
@@ -180,7 +179,7 @@ class Twilio
      * @param array $optionalParams
      * @return Twilio
      */
-    protected function fillOptionalParams(&$params, $message, $optionalParams): Twilio
+    protected function fillOptionalParams(&$params, $message, $optionalParams): self
     {
         foreach ($optionalParams as $optionalParam) {
             if ($message->$optionalParam) {
