@@ -63,6 +63,9 @@ class TwilioChannel
             } else {
                 $this->events->fire($event);
             }
+            
+            // by throwing exception, NotificationSent event is not triggered and we only trigger NotificationFailed above instead
+            throw new \Exception('Notification failed '.$exception->getMessage());
         }
     }
 
