@@ -42,6 +42,7 @@ TWILIO_AUTH_TOKEN=ABCD # optional when using username and password
 TWILIO_ACCOUNT_SID=1234 # always required
 TWILIO_FROM=100000000 # otional default from
 TWILIO_ALPHA_SENDER=HELLO # optional
+TWILIO_DEBUG_TO=23423423423 # Set a number that call calls/messages should be routed to for debugging
 ```
 
 ### Advanced configuration
@@ -50,6 +51,14 @@ Run `php artisan vendor:publish --provider="NotificationChannels\Twilio\TwilioPr
 ```
 /config/twilio-notification-channel.php
 ```
+
+#### Suppressing specific errors or all errors
+
+Publish the config using the above command, and edit the `ignored_error_codes` array. You can get the list of
+exception codes from [the documentation](https://www.twilio.com/docs/api/errors). 
+
+If you want to suppress all errors, you can set the option to `['*']`. The errors will not be logged but notification
+failed events will still be emitted.
 
 ## Usage
 

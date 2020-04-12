@@ -23,7 +23,7 @@ class TwilioChannel
     /**
      * TwilioChannel constructor.
      *
-     * @param Twilio     $twilio
+     * @param Twilio $twilio
      * @param Dispatcher $events
      */
     public function __construct(Twilio $twilio, Dispatcher $events)
@@ -35,11 +35,11 @@ class TwilioChannel
     /**
      * Send the given notification.
      *
-     * @param mixed                                  $notifiable
-     * @param \Illuminate\Notifications\Notification $notification
+     * @param mixed $notifiable
+     * @param Notification $notification
      *
      * @return mixed
-     * @throws CouldNotSendNotification
+     * @throws Exception
      */
     public function send($notifiable, Notification $notification)
     {
@@ -58,12 +58,24 @@ class TwilioChannel
 
             return $this->twilio->sendMessage($message, $to, $useSender);
         } catch (Exception $exception) {
-            $event = new NotificationFailed($notifiable, $notification, 'twilio', ['message' => $exception->getMessage(), 'exception' => $exception]);
+            $event = new NotificationFailed(
+                $notifiable,
+                $notification,
+                'twilio',
+                ['message' => $exception->getMessage(), 'exception' => $exception]
+            );
+
             if (function_exists('event')) { // Use event helper when possible to add Lumen support
                 event($event);
             } else {
                 $this->events->fire($event);
             }
+
+            if ($this->twilio->config->isIgnoredErrorCode($exception->getCode())) {
+                return;
+            }
+
+            throw $exception;
         }
     }
 

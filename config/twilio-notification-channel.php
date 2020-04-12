@@ -18,7 +18,7 @@ return [
     /**
      * If an exception is thrown with one of these error codes, it will be caught & suppressed.
      * To replicate the 2.x behaviour, specify '*' in the array, which will cause all exceptions to be suppressed.
-     * Suppressed errors will still be logged.
+     * Suppressed errors will not be logged or reported, but the `NotificationFailed` event will be emitted.
      *
      * @see https://www.twilio.com/docs/api/errors
      */

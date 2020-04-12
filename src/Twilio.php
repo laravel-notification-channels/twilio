@@ -14,7 +14,7 @@ class Twilio
     protected $twilioService;
 
     /** @var TwilioConfig */
-    private $config;
+    public $config;
 
     public function __construct(TwilioService $twilioService, TwilioConfig $config)
     {
@@ -35,24 +35,16 @@ class Twilio
      */
     public function sendMessage(TwilioMessage $message, ?string $to, bool $useAlphanumericSender = false)
     {
-        try {
-            if ($message instanceof TwilioSmsMessage) {
-                if ($useAlphanumericSender && $sender = $this->getAlphanumericSender()) {
-                    $message->from($sender);
-                }
-
-                return $this->sendSmsMessage($message, $to);
+        if ($message instanceof TwilioSmsMessage) {
+            if ($useAlphanumericSender && $sender = $this->getAlphanumericSender()) {
+                $message->from($sender);
             }
 
-            if ($message instanceof TwilioCallMessage) {
-                return $this->makeCall($message, $to);
-            }
-        } catch (TwilioException $e) {
-            if ($this->config->isIgnoredErrorCode($e->getCode())) {
-                return null;
-            }
+            return $this->sendSmsMessage($message, $to);
+        }
 
-            throw $e;
+        if ($message instanceof TwilioCallMessage) {
+            return $this->makeCall($message, $to);
         }
 
         throw CouldNotSendNotification::invalidMessageObject($message);

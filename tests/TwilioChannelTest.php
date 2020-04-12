@@ -7,10 +7,13 @@ use Illuminate\Notifications\Events\NotificationFailed;
 use Illuminate\Notifications\Notification;
 use Mockery;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
 use NotificationChannels\Twilio\Twilio;
 use NotificationChannels\Twilio\TwilioCallMessage;
 use NotificationChannels\Twilio\TwilioChannel;
+use NotificationChannels\Twilio\TwilioConfig;
 use NotificationChannels\Twilio\TwilioSmsMessage;
+use Twilio\Exceptions\RestException;
 
 class TwilioChannelTest extends MockeryTestCase
 {
@@ -39,9 +42,15 @@ class TwilioChannelTest extends MockeryTestCase
         $notifiable = new Notifiable();
         $notification = Mockery::mock(Notification::class);
 
+        $this->twilio->config = new TwilioConfig([
+            'ignored_error_codes' => [],
+        ]);
+
         $this->dispatcher->shouldReceive('fire')
             ->atLeast()->once()
             ->with(Mockery::type(NotificationFailed::class));
+
+        $this->expectException(CouldNotSendNotification::class);
 
         $result = $this->channel->send($notifiable, $notification);
 
@@ -101,8 +110,86 @@ class TwilioChannelTest extends MockeryTestCase
         $notifiable = new NotifiableWithAttribute();
         $notification = Mockery::mock(Notification::class);
 
+        $this->twilio->config = new TwilioConfig([
+            'ignored_error_codes' => [],
+        ]);
+
         // Invalid message
         $notification->shouldReceive('toTwilio')->andReturn(-1);
+
+        $this->dispatcher->shouldReceive('fire')
+            ->atLeast()->once()
+            ->with(Mockery::type(NotificationFailed::class));
+
+        $this->expectException(CouldNotSendNotification::class);
+
+        $this->channel->send($notifiable, $notification);
+    }
+
+    /** @test */
+    public function it_will_ignore_specific_error_codes()
+    {
+        $notifiable = new NotifiableWithAttribute();
+        $notification = Mockery::mock(Notification::class);
+
+        $this->twilio->config = new TwilioConfig([
+            'ignored_error_codes' => [
+                44444,
+            ],
+        ]);
+
+        $notification->shouldReceive('toTwilio')->andReturn('Message text');
+
+        $this->twilio->shouldReceive('sendMessage')
+            ->andThrow(new RestException('error', 44444, 400));
+
+        $this->dispatcher->shouldReceive('fire')
+            ->atLeast()->once()
+            ->with(Mockery::type(NotificationFailed::class));
+
+        $this->channel->send($notifiable, $notification);
+    }
+
+    /** @test */
+    public function it_will_rethrow_non_ignored_error_codes()
+    {
+        $notifiable = new NotifiableWithAttribute();
+        $notification = Mockery::mock(Notification::class);
+
+        $this->twilio->config = new TwilioConfig([
+            'ignored_error_codes' => [
+                55555,
+            ],
+        ]);
+
+        $notification->shouldReceive('toTwilio')->andReturn('Message text');
+
+        $this->twilio->shouldReceive('sendMessage')
+            ->andThrow(new RestException('error', 44444, 400));
+
+        $this->dispatcher->shouldReceive('fire')
+            ->atLeast()->once()
+            ->with(Mockery::type(NotificationFailed::class));
+
+        $this->expectException(RestException::class);
+
+        $this->channel->send($notifiable, $notification);
+    }
+
+    /** @test */
+    public function it_will_ignore_all_error_codes()
+    {
+        $notifiable = new NotifiableWithAttribute();
+        $notification = Mockery::mock(Notification::class);
+
+        $this->twilio->config = new TwilioConfig([
+            'ignored_error_codes' => ['*'],
+        ]);
+
+        $notification->shouldReceive('toTwilio')->andReturn('Message text');
+
+        $this->twilio->shouldReceive('sendMessage')
+            ->andThrow(new RestException('error', 44444, 400));
 
         $this->dispatcher->shouldReceive('fire')
             ->atLeast()->once()
