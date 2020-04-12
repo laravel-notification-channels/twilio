@@ -10,7 +10,15 @@ return [
     'alphanumeric_sender' => env('TWILIO_ALPHA_SENDER'),
 
     /**
+     * Specify a number where all calls/messages should be routed. This can be used in development/staging environments
+     * for testing.
+     */
+    'debug_to' => env('TWILIO_DEBUG_TO'),
+
+    /**
      * If an exception is thrown with one of these error codes, it will be caught & suppressed.
+     * To replicate the 2.x behaviour, specify '*' in the array, which will cause all exceptions to be suppressed.
+     * Suppressed errors will still be logged.
      *
      * @see https://www.twilio.com/docs/api/errors
      */

@@ -26,8 +26,8 @@ class Twilio
      * Send a TwilioMessage to the a phone number.
      *
      * @param TwilioMessage $message
-     * @param string|null        $to
-     * @param bool          $useAlphanumericSender
+     * @param string|null $to
+     * @param bool $useAlphanumericSender
      *
      * @return mixed
      * @throws TwilioException
@@ -62,7 +62,7 @@ class Twilio
      * Send an sms message using the Twilio Service.
      *
      * @param TwilioSmsMessage $message
-     * @param string|null      $to
+     * @param string|null $to
      *
      * @return MessageInstance
      * @throws CouldNotSendNotification
@@ -70,6 +70,12 @@ class Twilio
      */
     protected function sendSmsMessage(TwilioSmsMessage $message, ?string $to): MessageInstance
     {
+        $debugTo = $this->config->getDebugTo();
+
+        if ($debugTo !== null) {
+            $to = $debugTo;
+        }
+
         $params = [
             'body' => trim($message->content),
         ];
@@ -109,7 +115,7 @@ class Twilio
      * Make a call using the Twilio Service.
      *
      * @param TwilioCallMessage $message
-     * @param string|null           $to
+     * @param string|null $to
      *
      * @return CallInstance
      * @throws TwilioException
