@@ -15,29 +15,6 @@ class TwilioProvider extends ServiceProvider implements DeferrableProvider
      */
     public function boot()
     {
-        $this->app->when(TwilioChannel::class)
-            ->needs(Twilio::class)
-            ->give(function () {
-                return new Twilio(
-                    $this->app->make(TwilioService::class),
-                    $this->app->make(TwilioConfig::class)
-                );
-            });
-
-        $this->app->bind(TwilioService::class, function (Application $app) {
-            /** @var TwilioConfig $config */
-            $config = $app->make(TwilioConfig::class);
-
-            if ($config->usingUsernamePasswordAuth()) {
-                return new TwilioService($config->getUsername(), $config->getPassword(), $config->getAccountSid());
-            }
-
-            if ($config->usingTokenAuth()) {
-                return new TwilioService($config->getAccountSid(), $config->getAuthToken());
-            }
-
-            throw InvalidConfigException::missingConfig();
-        });
     }
 
     /**
@@ -53,6 +30,28 @@ class TwilioProvider extends ServiceProvider implements DeferrableProvider
 
         $this->app->bind(TwilioConfig::class, function () {
             return new TwilioConfig($this->app['config']['twilio-notification-channel']);
+        });
+
+        $this->app->singleton(TwilioChannel::class, function (Application $app) {
+            return new Twilio(
+                $this->app->make(TwilioService::class),
+                $this->app->make(TwilioConfig::class)
+            );
+        });
+
+        $this->app->singleton(TwilioService::class, function (Application $app) {
+            /** @var TwilioConfig $config */
+            $config = $app->make(TwilioConfig::class);
+
+            if ($config->usingUsernamePasswordAuth()) {
+                return new TwilioService($config->getUsername(), $config->getPassword(), $config->getAccountSid());
+            }
+
+            if ($config->usingTokenAuth()) {
+                return new TwilioService($config->getAccountSid(), $config->getAuthToken());
+            }
+
+            throw InvalidConfigException::missingConfig();
         });
     }
 
