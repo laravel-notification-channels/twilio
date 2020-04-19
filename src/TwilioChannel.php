@@ -65,11 +65,7 @@ class TwilioChannel
                 ['message' => $exception->getMessage(), 'exception' => $exception]
             );
 
-            if (function_exists('event')) { // Use event helper when possible to add Lumen support
-                event($event);
-            } else {
-                $this->events->fire($event);
-            }
+            $this->events->dispatch($event);
 
             if ($this->twilio->config->isIgnoredErrorCode($exception->getCode())) {
                 return;

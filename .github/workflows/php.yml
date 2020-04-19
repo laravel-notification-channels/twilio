@@ -1,6 +1,6 @@
 name: PHP
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   run:
@@ -28,4 +28,9 @@ jobs:
       - name: Lint composer.json
         run: composer validate
       - name: Run Tests
-        run: composer test:ci
+        run: composer test:unit
+      - name: Run Integration Tests
+        if: matrix.laravel-version == '^7.0'
+        run: |
+            composer require --no-update --no-interaction "orchestra/testbench:^5.1"
+            composer test:integration

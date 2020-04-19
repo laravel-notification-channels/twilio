@@ -40,12 +40,13 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "NotificationChannels\\Twilio\\Test\\": "tests"
+            "NotificationChannels\\Twilio\\Tests\\": "tests"
         }
     },
     "scripts": {
         "test": "vendor/bin/phpunit",
-        "test:ci": "phpunit --verbose --coverage-clover=coverage.xml"
+        "test:unit": "phpunit --verbose --testsuite Unit",
+        "test:integration": "phpunit --verbose --testsuite Integration"
     },
     "config": {
         "sort-packages": true

@@ -1,6 +1,6 @@
 <?php
 
-namespace NotificationChannels\Twilio\Test;
+namespace NotificationChannels\Twilio\Tests\Unit;
 
 use NotificationChannels\Twilio\TwilioCallMessage;
 

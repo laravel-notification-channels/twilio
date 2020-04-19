@@ -2,6 +2,7 @@
 
 namespace NotificationChannels\Twilio;
 
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
@@ -22,7 +23,7 @@ class TwilioProvider extends ServiceProvider implements DeferrableProvider
      */
     public function register()
     {
-        $this->mergeConfigFrom(__DIR__.'/../config/twilio-notification-channel.php', '');
+        $this->mergeConfigFrom(__DIR__.'/../config/twilio-notification-channel.php', 'twilio-notification-channel');
 
         $this->publishes([
             __DIR__.'/../config/twilio-notification-channel.php' => config_path('twilio-notification-channel.php'),
@@ -30,13 +31,6 @@ class TwilioProvider extends ServiceProvider implements DeferrableProvider
 
         $this->app->bind(TwilioConfig::class, function () {
             return new TwilioConfig($this->app['config']['twilio-notification-channel']);
-        });
-
-        $this->app->singleton(TwilioChannel::class, function (Application $app) {
-            return new Twilio(
-                $this->app->make(TwilioService::class),
-                $this->app->make(TwilioConfig::class)
-            );
         });
 
         $this->app->singleton(TwilioService::class, function (Application $app) {
@@ -52,6 +46,20 @@ class TwilioProvider extends ServiceProvider implements DeferrableProvider
             }
 
             throw InvalidConfigException::missingConfig();
+        });
+
+        $this->app->singleton(Twilio::class, function (Application $app) {
+            return new Twilio(
+                $app->make(TwilioService::class),
+                $app->make(TwilioConfig::class)
+            );
+        });
+
+        $this->app->singleton(TwilioChannel::class, function (Application $app) {
+            return new TwilioChannel(
+                $app->make(Twilio::class),
+                $app->make(Dispatcher::class)
+            );
         });
     }
 
