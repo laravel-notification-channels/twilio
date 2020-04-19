@@ -46,7 +46,7 @@ class TwilioChannelTest extends MockeryTestCase
             'ignored_error_codes' => [],
         ]);
 
-        $this->dispatcher->shouldReceive('fire')
+        $this->dispatcher->shouldReceive('dispatch')
             ->atLeast()->once()
             ->with(Mockery::type(NotificationFailed::class));
 
@@ -117,7 +117,7 @@ class TwilioChannelTest extends MockeryTestCase
         // Invalid message
         $notification->shouldReceive('toTwilio')->andReturn(-1);
 
-        $this->dispatcher->shouldReceive('fire')
+        $this->dispatcher->shouldReceive('dispatch')
             ->atLeast()->once()
             ->with(Mockery::type(NotificationFailed::class));
 
@@ -143,7 +143,7 @@ class TwilioChannelTest extends MockeryTestCase
         $this->twilio->shouldReceive('sendMessage')
             ->andThrow(new RestException('error', 44444, 400));
 
-        $this->dispatcher->shouldReceive('fire')
+        $this->dispatcher->shouldReceive('dispatch')
             ->atLeast()->once()
             ->with(Mockery::type(NotificationFailed::class));
 
@@ -167,7 +167,7 @@ class TwilioChannelTest extends MockeryTestCase
         $this->twilio->shouldReceive('sendMessage')
             ->andThrow(new RestException('error', 44444, 400));
 
-        $this->dispatcher->shouldReceive('fire')
+        $this->dispatcher->shouldReceive('dispatch')
             ->atLeast()->once()
             ->with(Mockery::type(NotificationFailed::class));
 
@@ -191,7 +191,7 @@ class TwilioChannelTest extends MockeryTestCase
         $this->twilio->shouldReceive('sendMessage')
             ->andThrow(new RestException('error', 44444, 400));
 
-        $this->dispatcher->shouldReceive('fire')
+        $this->dispatcher->shouldReceive('dispatch')
             ->atLeast()->once()
             ->with(Mockery::type(NotificationFailed::class));
 
