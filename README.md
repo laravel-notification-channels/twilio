@@ -10,6 +10,8 @@
 
 This package makes it easy to send [Twilio notifications](https://documentation.twilio.com/docs) with Laravel 5.5+, 6.x and 7.x
 
+You are viewing the `3.x` documentation. [Click here](https://github.com/laravel-notification-channels/twilio/tree/2.x) to view the `2.x` documentation.
+
 ## Contents
 
 - [Installation](#installation)
