@@ -3,7 +3,6 @@
 namespace NotificationChannels\Twilio;
 
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use NotificationChannels\Twilio\Exceptions\InvalidConfigException;
@@ -33,7 +32,7 @@ class TwilioProvider extends ServiceProvider implements DeferrableProvider
             return new TwilioConfig($this->app['config']['twilio-notification-channel']);
         });
 
-        $this->app->singleton(TwilioService::class, function (Application $app) {
+        $this->app->singleton(TwilioService::class, function ($app) {
             /** @var TwilioConfig $config */
             $config = $app->make(TwilioConfig::class);
 
@@ -48,14 +47,14 @@ class TwilioProvider extends ServiceProvider implements DeferrableProvider
             throw InvalidConfigException::missingConfig();
         });
 
-        $this->app->singleton(Twilio::class, function (Application $app) {
+        $this->app->singleton(Twilio::class, function ($app) {
             return new Twilio(
                 $app->make(TwilioService::class),
                 $app->make(TwilioConfig::class)
             );
         });
 
-        $this->app->singleton(TwilioChannel::class, function (Application $app) {
+        $this->app->singleton(TwilioChannel::class, function ($app) {
             return new TwilioChannel(
                 $app->make(Twilio::class),
                 $app->make(Dispatcher::class)
