@@ -34,3 +34,7 @@ jobs:
         run: |
             composer require --dev --no-interaction "orchestra/testbench:^5.1"
             composer test:integration
+        if: matrix.laravel-version == '^8.0'
+            run: |
+                composer require --dev --no-interaction "orchestra/testbench:^6.0"
+                composer test:integration
