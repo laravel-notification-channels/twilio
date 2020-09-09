@@ -11,6 +11,10 @@ jobs:
       matrix:
         laravel-version: ['5.8.*', '^6.0', '^7.0', '^8.0']
         php-versions: ['7.2' , '7.3', '7.4']
+        exclude:
+          # excludes PHP '7.2' on Laravel '^8.0'
+          - php-versions: '7.2'
+            laravel-version: '^8.0'
     name: PHP ${{ matrix.php-versions }} on Laravel ${{ matrix.laravel-version }}
     steps:
       - name: Checkout
@@ -34,3 +38,7 @@ jobs:
         run: |
             composer require --dev --no-interaction "orchestra/testbench:^5.1"
             composer test:integration
+        if: matrix.laravel-version == '^8.0'
+            run: |
+                composer require --dev --no-interaction "orchestra/testbench:^6.0"
+                composer test:integration
