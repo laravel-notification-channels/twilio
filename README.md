@@ -45,6 +45,7 @@ TWILIO_ACCOUNT_SID=1234 # always required
 TWILIO_FROM=100000000 # optional default from
 TWILIO_ALPHA_SENDER=HELLO # optional
 TWILIO_DEBUG_TO=23423423423 # Set a number that call calls/messages should be routed to for debugging
+TWILIO_SMS_SERVICE_SID=MG0d3dbdaef37df66fcea700e60695c52a # Optional. Recommended when sending globally
 ```
 
 ### Advanced configuration
@@ -161,11 +162,21 @@ public function routeNotificationForTwilio()
 
 - `from('')`: Accepts a phone to use as the notification sender.
 - `content('')`: Accepts a string value for the notification body.
+- `messagingServiceSid('')`: Accepts a messaging service SID to handle configuration.
 
 #### TwilioCallMessage
 
 - `from('')`: Accepts a phone to use as the notification sender.
 - `url('')`: Accepts an url for the call TwiML.
+
+### Global SMS
+
+If you plan to send SMS globally then it's a good idea to set up a (Messaging Service)[https://www.twilio.com/docs/sms/services]. 
+These abstracts the configuration of sending SMS and handles picking a the phone number out of a pool instead of explicitly mentioning 
+a from or alphanumeric sender.
+
+If you are using a single messaging service make sure you have the `TWILIO_FROM` and `TWILIO_ALPHA_SENDER` empty while providing a
+ `TWILIO_SMS_SERVICE_SID`. Otherwise conditionally set the `messagingServiceSid` on the `TwilioSmsMessage`.
 
 ## Changelog
 

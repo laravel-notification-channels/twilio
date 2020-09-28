@@ -10,6 +10,11 @@ return [
     'alphanumeric_sender' => env('TWILIO_ALPHA_SENDER'),
 
     /**
+     * See https://www.twilio.com/docs/sms/services
+     */
+    'sms_service_sid' => env('TWILIO_SMS_SERVICE_SID'),
+
+    /**
      * Specify a number where all calls/messages should be routed. This can be used in development/staging environments
      * for testing.
      */
