@@ -15,7 +15,6 @@ You are viewing the `3.x` documentation. [Click here](https://github.com/laravel
 ## Contents
 
 - [Installation](#installation)
-	- [Setting up your Twilio account](#setting-up-your-twilio-account)
 - [Usage](#usage)
 	- [Available Message methods](#available-message-methods)
 - [Changelog](#changelog)
@@ -62,6 +61,16 @@ exception codes from [the documentation](https://www.twilio.com/docs/api/errors)
 
 If you want to suppress all errors, you can set the option to `['*']`. The errors will not be logged but notification
 failed events will still be emitted.
+
+#### Global SMS
+
+If you plan to send SMS globally then it's a good idea to set up a (Messaging Service)[https://www.twilio.com/docs/sms/services]. 
+These abstracts the configuration of sending SMS and handles picking a phone number out of a pool instead of explicitly mentioning 
+the from or alphanumeric sender.
+
+If you are using a single messaging service make sure you have the `TWILIO_FROM` and `TWILIO_ALPHA_SENDER` empty while providing a
+ `TWILIO_SMS_SERVICE_SID`. Otherwise conditionally set the `messagingServiceSid` on the `TwilioSmsMessage`.
+
 
 ## Upgrading from 2.x to 3.x
 
@@ -169,14 +178,6 @@ public function routeNotificationForTwilio()
 - `from('')`: Accepts a phone to use as the notification sender.
 - `url('')`: Accepts an url for the call TwiML.
 
-### Global SMS
-
-If you plan to send SMS globally then it's a good idea to set up a (Messaging Service)[https://www.twilio.com/docs/sms/services]. 
-These abstracts the configuration of sending SMS and handles picking a phone number out of a pool instead of explicitly mentioning 
-the from or alphanumeric sender.
-
-If you are using a single messaging service make sure you have the `TWILIO_FROM` and `TWILIO_ALPHA_SENDER` empty while providing a
- `TWILIO_SMS_SERVICE_SID`. Otherwise conditionally set the `messagingServiceSid` on the `TwilioSmsMessage`.
 
 ## Changelog
 
