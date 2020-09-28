@@ -62,11 +62,12 @@ exception codes from [the documentation](https://www.twilio.com/docs/api/errors)
 If you want to suppress all errors, you can set the option to `['*']`. The errors will not be logged but notification
 failed events will still be emitted.
 
-#### Global SMS
+#### Recommended Configuration
 
-If you plan to send SMS globally then it's a good idea to set up a (Messaging Service)[https://www.twilio.com/docs/sms/services]. 
-These abstracts the configuration of sending SMS and handles picking a phone number out of a pool instead of explicitly mentioning 
-the from or alphanumeric sender.
+Twilio recommends always using a [Messaging Service](https://www.twilio.com/docs/sms/services) because it gives you
+ access to features like Advanced Opt-Out, Sticky Sender, Scaler, Geomatch, Shortcode Reroute, and Smart Encoding.
+
+Having issues with SMS? Check Twilio's [best practices](https://www.twilio.com/docs/sms/services/services-best-practices).
 
 ## Upgrading from 2.x to 3.x
 
