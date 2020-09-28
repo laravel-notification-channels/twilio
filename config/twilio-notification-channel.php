@@ -10,7 +10,7 @@ return [
     'alphanumeric_sender' => env('TWILIO_ALPHA_SENDER'),
 
     /**
-     * See https://www.twilio.com/docs/sms/services
+     * See https://www.twilio.com/docs/sms/services.
      */
     'sms_service_sid' => env('TWILIO_SMS_SERVICE_SID'),
 
