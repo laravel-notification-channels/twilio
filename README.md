@@ -178,7 +178,6 @@ public function routeNotificationForTwilio()
 - `from('')`: Accepts a phone to use as the notification sender.
 - `url('')`: Accepts an url for the call TwiML.
 
-
 ## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
