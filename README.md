@@ -68,10 +68,6 @@ If you plan to send SMS globally then it's a good idea to set up a (Messaging Se
 These abstracts the configuration of sending SMS and handles picking a phone number out of a pool instead of explicitly mentioning 
 the from or alphanumeric sender.
 
-If you are using a single messaging service make sure you have the `TWILIO_FROM` and `TWILIO_ALPHA_SENDER` empty while providing a
- `TWILIO_SMS_SERVICE_SID`. Otherwise conditionally set the `messagingServiceSid` on the `TwilioSmsMessage`.
-
-
 ## Upgrading from 2.x to 3.x
 
 If you're upgrading from version `2.x`, you'll need to make sure that your set environment variables match those above 
