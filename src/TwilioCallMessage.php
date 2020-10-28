@@ -69,7 +69,7 @@ class TwilioCallMessage extends TwilioMessage
     protected function contentType(string $contentType)
     {
         if (
-            !is_null($this->contentType)
+            ! is_null($this->contentType)
             && $contentType !== $this->contentType
         ) {
             InvalidConfigException::multipleContentTypes();
