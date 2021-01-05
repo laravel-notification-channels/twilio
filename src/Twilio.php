@@ -93,10 +93,7 @@ class Twilio
             'provideFeedback',
             'validityPeriod',
             'attempt',
-            'contentRetention',
-            'addressRetention',
             'smartEncoded',
-            'persistentAction',
         ]);
 
         if ($message instanceof TwilioMmsMessage) {
