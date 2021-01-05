@@ -40,6 +40,16 @@ class TwilioSmsMessage extends TwilioMessage
     public $validityPeriod;
 
     /**
+     * @var null|int
+     */
+    public $attempt;
+
+    /**
+     * @var null|bool
+     */
+    public $smartEncoded;
+
+    /**
      * Get the from address of this message.
      *
      * @return null|string
@@ -149,12 +159,37 @@ class TwilioSmsMessage extends TwilioMessage
      * Set the validity period (in seconds).
      *
      * @param int $validityPeriodSeconds
-     *
      * @return $this
      */
     public function validityPeriod(int $validityPeriodSeconds): self
     {
         $this->validityPeriod = $validityPeriodSeconds;
+
+        return $this;
+    }
+
+    /**
+     * Set the attempt option.
+     *
+     * @param int $attempt
+     * @return $this
+     */
+    public function attempt(int $attempt): self
+    {
+        $this->attempt = $attempt;
+
+        return $this;
+    }
+
+    /**
+     * Set the smart encoded option.
+     *
+     * @param bool $smartEncoded
+     * @return $this
+     */
+    public function smartEncoded(bool $smartEncoded): self
+    {
+        $this->smartEncoded = $smartEncoded;
 
         return $this;
     }

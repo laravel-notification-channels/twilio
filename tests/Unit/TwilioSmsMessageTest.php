@@ -57,6 +57,8 @@ class TwilioSmsMessageTest extends TwilioMessageTest
         $message->maxPrice(0.05);
         $message->provideFeedback(true);
         $message->validityPeriod(120);
+        $message->attempt(5);
+        $message->smartEncoded(true);
 
         $this->assertEquals('http://example.com', $message->statusCallback);
         $this->assertEquals('PUT', $message->statusCallbackMethod);
@@ -64,5 +66,7 @@ class TwilioSmsMessageTest extends TwilioMessageTest
         $this->assertEquals(0.05, $message->maxPrice);
         $this->assertEquals(true, $message->provideFeedback);
         $this->assertEquals(120, $message->validityPeriod);
+        $this->assertEquals(5, $message->attempt);
+        $this->assertEquals(true, $message->smartEncoded);
     }
 }
