@@ -55,6 +55,10 @@ class TwilioChannel
             if (! $message instanceof TwilioMessage) {
                 throw CouldNotSendNotification::invalidMessageObject($message);
             }
+            
+            if ($message->getTo()) {
+                $to = $message->getTo();
+            }
 
             return $this->twilio->sendMessage($message, $to, $useSender);
         } catch (Exception $exception) {
