@@ -44,6 +44,10 @@ class TwilioChannel
     public function send($notifiable, $notification)
     {
         try {
+            if (!method_exists($notification, 'toTwilio')) {
+                throw new CouldNotSendNotification;
+            }
+
             $message = $notification->toTwilio($notifiable);
 
             if (is_string($message)) {
