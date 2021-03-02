@@ -80,14 +80,14 @@ class TwilioChannel
      * Get the address to send a notification to.
      *
      * @param mixed $notifiable
-     * @param TwilioMessage $message
+     * @param TwilioMessage|null $message
      *
      * @return mixed
      * @throws CouldNotSendNotification
      */
-    protected function getTo($notifiable, $message)
+    protected function getTo($notifiable, $message = null)
     {
-        if ($message->getTo()) {
+        if ($message && $message->getTo()) {
             return $message->getTo();
         }
         if ($notifiable->routeNotificationFor(self::class)) {
