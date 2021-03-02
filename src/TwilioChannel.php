@@ -41,7 +41,7 @@ class TwilioChannel
      * @return mixed
      * @throws Exception
      */
-    public function send($notifiable, Notification $notification)
+    public function send($notifiable, $notification)
     {
         try {
             $message = $notification->toTwilio($notifiable);
