@@ -41,7 +41,7 @@ class TwilioChannel
      * @return mixed
      * @throws Exception
      */
-    public function send($notifiable, $notification)
+    public function send($notifiable, Notification $notification)
     {
         try {
             if (!method_exists($notification, 'toTwilio')) {
@@ -57,7 +57,7 @@ class TwilioChannel
             if (! $message instanceof TwilioMessage) {
                 throw CouldNotSendNotification::invalidMessageObject($message);
             }
-            
+
             $to = $this->getTo($notifiable, $notification, $message);
             $useSender = $this->canReceiveAlphanumericSender($notifiable);
 
