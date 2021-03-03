@@ -91,6 +91,9 @@ class TwilioChannel
         if ($message->getTo()) {
             return $message->getTo();
         }
+        if ($notifiable->routeNotificationFor(self::class, $notification)) {
+            return $notifiable->routeNotificationFor(self::class, $notification);
+        }
         if ($notifiable->routeNotificationFor('twilio', $notification)) {
             return $notifiable->routeNotificationFor('twilio', $notification);
         }
