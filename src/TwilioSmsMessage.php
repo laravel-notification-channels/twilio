@@ -41,11 +41,14 @@ class TwilioSmsMessage extends TwilioMessage
 
     /**
      * @var null|int
+     * Total number of attempts made ( including this ) to send out the message regardless of the provider used.
+     * Used to provide feedback of delivery quality to twilio.
      */
     public $attempt;
 
     /**
      * @var null|bool
+     * Whether to detect Unicode characters that have a similar GSM-7 character and replace them.
      */
     public $smartEncoded;
 
