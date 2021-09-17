@@ -7,6 +7,7 @@ use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use NotificationChannels\Twilio\Exceptions\InvalidConfigException;
+use Twilio\Http\CurlClient;
 use Twilio\Rest\Client as TwilioService;
 
 class TwilioProvider extends ServiceProvider implements DeferrableProvider
@@ -35,14 +36,21 @@ class TwilioProvider extends ServiceProvider implements DeferrableProvider
 
         $this->app->singleton(TwilioService::class, function (Application $app) {
             /** @var TwilioConfig $config */
-            $config = $app->make(TwilioConfig::class);
+            $config     = $app->make(TwilioConfig::class);
+            $httpClient = $config->getProxy() ? new CurlClient([CURLOPT_PROXY => $config->getProxy()]) : null;
 
             if ($config->usingUsernamePasswordAuth()) {
-                return new TwilioService($config->getUsername(), $config->getPassword(), $config->getAccountSid());
+                return new TwilioService(
+                    $config->getUsername(),
+                    $config->getPassword(),
+                    $config->getAccountSid(),
+                    null,
+                    $httpClient
+                );
             }
 
             if ($config->usingTokenAuth()) {
-                return new TwilioService($config->getAccountSid(), $config->getAuthToken());
+                return new TwilioService($config->getAccountSid(), $config->getAuthToken(), null, null, $httpClient);
             }
 
             throw InvalidConfigException::missingConfig();
