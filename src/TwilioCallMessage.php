@@ -28,6 +28,11 @@ class TwilioCallMessage extends TwilioMessage
     public $fallbackMethod;
 
     /**
+     * @var null|string
+     */
+    public $machineDetection;
+
+    /**
      * Set the message url.
      *
      * @param  string $url
@@ -88,6 +93,19 @@ class TwilioCallMessage extends TwilioMessage
     public function fallbackMethod(string $fallbackMethod): self
     {
         $this->fallbackMethod = $fallbackMethod;
+
+        return $this;
+    }
+
+    /**
+     * Set the answering machine detection mode.
+     *
+     * @param string $machineDetection
+     * @return $this
+     */
+    public function machineDetection(string $machineDetection): self
+    {
+        $this->machineDetection = $machineDetection;
 
         return $this;
     }
