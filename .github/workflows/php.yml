@@ -43,7 +43,4 @@ jobs:
       - name: Run Tests
         run: composer test:unit
       - name: Run Integration Tests
-        if: matrix.laravel-version == '^7.0'
-        run: |
-            composer require --dev --no-interaction "orchestra/testbench:^5.1" "egulias/email-validator:^2.1.10"
-            composer test:integration
+        run: composer test:integration
