@@ -9,8 +9,8 @@ jobs:
       max-parallel: 15
       fail-fast: false
       matrix:
-        laravel-version: ['5.8.*', '^6.0', '^7.0', '^8.0']
-        php-versions: ['7.3', '7.4']
+        laravel-version: ['^8.0', '^9.0']
+        php-versions: ['7.4', '8.0', '8.1']
     name: PHP ${{ matrix.php-versions }} on Laravel ${{ matrix.laravel-version }}
     steps:
       - name: Checkout
@@ -30,7 +30,7 @@ jobs:
       - name: Run Tests
         run: composer test:unit
       - name: Run Integration Tests
-        if: matrix.laravel-version == '^7.0'
+        if: matrix.laravel-version == '^8.0'
         run: |
-            composer require --dev --no-interaction "orchestra/testbench:^5.1"
+            composer require --dev --no-interaction "orchestra/testbench:^7.0"
             composer test:integration

@@ -4,16 +4,12 @@ namespace NotificationChannels\Twilio;
 
 class TwilioConfig
 {
-    /** @var array */
-    private $config;
-
     /**
      * @param array $config
      */
-    public function __construct(array $config)
-    {
-        $this->config = $config;
-    }
+    public function __construct(
+        private array $config
+    ) {}
 
     public function usingUsernamePasswordAuth(): bool
     {

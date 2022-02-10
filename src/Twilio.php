@@ -10,17 +10,10 @@ use Twilio\Rest\Client as TwilioService;
 
 class Twilio
 {
-    /** @var TwilioService */
-    protected $twilioService;
-
-    /** @var TwilioConfig */
-    public $config;
-
-    public function __construct(TwilioService $twilioService, TwilioConfig $config)
-    {
-        $this->twilioService = $twilioService;
-        $this->config = $config;
-    }
+    public function __construct(
+        protected TwilioService $twilioService,
+        public TwilioConfig $config
+    ) {}
 
     /**
      * Send a TwilioMessage to the a phone number.
