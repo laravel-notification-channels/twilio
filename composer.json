@@ -24,14 +24,14 @@
     "require": {
         "php": ">=7.2",
         "twilio/sdk": "~6.0",
-        "illuminate/notifications": "^5.8 || ^6.0 || ^7.0 || ^8.0",
-        "illuminate/support": "^5.8 || ^6.0 || ^7.0 || ^8.0",
-        "illuminate/events": "^5.8 || ^6.0 || ^7.0 || ^8.0",
-        "illuminate/queue": "^5.8 || ^6.0 || ^7.0 || ^8.0"
+        "illuminate/notifications": "^5.8 || ^6.0 || ^7.0 || ^8.0|^9.0",
+        "illuminate/support": "^5.8 || ^6.0 || ^7.0 || ^8.0|^9.0",
+        "illuminate/events": "^5.8 || ^6.0 || ^7.0 || ^8.0|^9.0",
+        "illuminate/queue": "^5.8 || ^6.0 || ^7.0 || ^8.0|^9.0"
     },
     "require-dev": {
         "mockery/mockery": "^1.3",
-        "phpunit/phpunit": "^8.5"
+        "phpunit/phpunit": "^8.5|^9.5.10"
     },
     "autoload": {
         "psr-4": {
