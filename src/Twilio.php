@@ -64,7 +64,7 @@ class Twilio
     {
         $debugTo = $this->config->getDebugTo();
 
-        if ($debugTo !== null && $debugTo !== "") {
+        if (!empty($debugTo)) {
             $to = $debugTo;
         }
 
