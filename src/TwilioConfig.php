@@ -45,6 +45,11 @@ class TwilioConfig
         return $this->config['account_sid'] ?? null;
     }
 
+    public function getSid(): ?string
+    {
+        return $this->config['sid'] ?? null;
+    }
+
     public function getFrom(): ?string
     {
         return $this->config['from'] ?? null;
