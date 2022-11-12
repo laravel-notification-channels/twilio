@@ -45,6 +45,10 @@ class TwilioChannel
     {
         try {
             $to = $this->getTo($notifiable, $notification);
+            
+            // Suppress notification if notifier address is found to be NULL
+            if($to === null) return;
+            
             $message = $notification->toTwilio($notifiable);
             $useSender = $this->canReceiveAlphanumericSender($notifiable);
 
