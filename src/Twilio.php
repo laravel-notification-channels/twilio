@@ -76,6 +76,10 @@ class Twilio
             $params['messagingServiceSid'] = $messagingServiceSid;
         }
 
+        if ($this->config->isShortenUrlsEnabled()) {
+            $params['ShortenUrls'] = "true";
+        }
+
         if ($from = $this->getFrom($message)) {
             $params['from'] = $from;
         }
