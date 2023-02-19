@@ -64,7 +64,7 @@ class Twilio
     {
         $debugTo = $this->config->getDebugTo();
 
-        if ($debugTo !== null) {
+        if (!empty($debugTo)) {
             $to = $debugTo;
         }
 
@@ -115,6 +115,12 @@ class Twilio
      */
     protected function makeCall(TwilioCallMessage $message, ?string $to): CallInstance
     {
+        $debugTo = $this->config->getDebugTo();
+
+        if ($debugTo !== null) {
+            $to = $debugTo;
+        }
+
         $params = [
             'url' => trim($message->content),
         ];

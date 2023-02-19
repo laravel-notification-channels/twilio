@@ -9,16 +9,29 @@ jobs:
       max-parallel: 15
       fail-fast: false
       matrix:
-        laravel-version: ['5.8.*', '^6.0', '^7.0', '^8.0']
-        php-versions: ['7.3', '7.4']
-    name: PHP ${{ matrix.php-versions }} on Laravel ${{ matrix.laravel-version }}
+        laravel-version: ['5.8.*', '^6.0', '^7.0', '^8.0', '^9.0']
+        php-version: ['7.3', '7.4', '8.0', '8.1']
+        exclude:
+          - laravel-version: '5.8.*'
+            php-version: '8.0'
+          - laravel-version: '5.8.*'
+            php-version: '8.1'
+          - laravel-version: '^6.0'
+            php-version: '8.1'
+          - laravel-version: '^7.0'
+            php-version: '8.1'
+          - laravel-version: '^9.0'
+            php-version: '7.3'
+          - laravel-version: '^9.0'
+            php-version: '7.4'
+    name: PHP ${{ matrix.php-version }} on Laravel ${{ matrix.laravel-version }}
     steps:
       - name: Checkout
         uses: actions/checkout@master
       - name: Setup PHP
         uses: shivammathur/setup-php@master
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ matrix.php-version }}
           extension-csv: mbstring, xdebug
           coverage: xdebug
       - name: Install dependencies
@@ -30,7 +43,4 @@ jobs:
       - name: Run Tests
         run: composer test:unit
       - name: Run Integration Tests
-        if: matrix.laravel-version == '^7.0'
-        run: |
-            composer require --dev --no-interaction "orchestra/testbench:^5.1"
-            composer test:integration
+        run: composer test:integration
