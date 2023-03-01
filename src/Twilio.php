@@ -96,6 +96,8 @@ class Twilio
             'maxPrice',
             'provideFeedback',
             'validityPeriod',
+            'attempt',
+            'smartEncoded',
         ]);
 
         if ($message instanceof TwilioMmsMessage) {

@@ -40,6 +40,19 @@ class TwilioSmsMessage extends TwilioMessage
     public $validityPeriod;
 
     /**
+     * @var null|int
+     * Total number of attempts made ( including this ) to send out the message regardless of the provider used.
+     * Used to provide feedback of delivery quality to twilio.
+     */
+    public $attempt;
+
+    /**
+     * @var null|bool
+     * Whether to detect Unicode characters that have a similar GSM-7 character and replace them.
+     */
+    public $smartEncoded;
+
+    /**
      * Get the from address of this message.
      *
      * @return null|string
@@ -149,12 +162,37 @@ class TwilioSmsMessage extends TwilioMessage
      * Set the validity period (in seconds).
      *
      * @param int $validityPeriodSeconds
-     *
      * @return $this
      */
     public function validityPeriod(int $validityPeriodSeconds): self
     {
         $this->validityPeriod = $validityPeriodSeconds;
+
+        return $this;
+    }
+
+    /**
+     * Set the attempt option.
+     *
+     * @param int $attempt
+     * @return $this
+     */
+    public function attempt(int $attempt): self
+    {
+        $this->attempt = $attempt;
+
+        return $this;
+    }
+
+    /**
+     * Set the smart encoded option.
+     *
+     * @param bool $smartEncoded
+     * @return $this
+     */
+    public function smartEncoded(bool $smartEncoded): self
+    {
+        $this->smartEncoded = $smartEncoded;
 
         return $this;
     }
