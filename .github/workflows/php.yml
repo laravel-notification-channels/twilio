@@ -1,33 +1,48 @@
 name: PHP
 
-on: [push, pull_request]
+on:
+  - push
+  - pull_request
 
 jobs:
   run:
     runs-on: ubuntu-latest
+
     strategy:
       max-parallel: 15
       fail-fast: false
       matrix:
-        laravel-version: ['^8.0', '^9.0', 10.*]
+        laravel-version: ['10.*', '11.0', ^8.0, ^9.0]
         php-version: ['8.0', '8.1', '8.2']
+        exclude:
+          - laravel-version: 11.*
+            php-version: '8.0'
+          - laravel-version: 11.*
+            php-version: '8.1'
+
     name: PHP ${{ matrix.php-version }} on Laravel ${{ matrix.laravel-version }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@master
+
       - name: Setup PHP
         uses: shivammathur/setup-php@master
         with:
           php-version: ${{ matrix.php-version }}
           extension-csv: mbstring, xdebug
           coverage: xdebug
+
       - name: Install dependencies
         run: |
           composer require --no-update --no-interaction "illuminate/support:${{ matrix.laravel-version }}"
           composer update --no-interaction --prefer-dist --no-suggest
+
       - name: Lint composer.json
         run: composer validate
+
       - name: Run Tests
         run: composer test:unit
+
       - name: Run Integration Tests
         run: composer test:integration
