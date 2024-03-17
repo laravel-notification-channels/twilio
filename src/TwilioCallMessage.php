@@ -2,10 +2,21 @@
 
 namespace NotificationChannels\Twilio;
 
+use NotificationChannels\Twilio\Exceptions\InvalidConfigException;
+use Twilio\TwiML\VoiceResponse;
+
 class TwilioCallMessage extends TwilioMessage
 {
     public const STATUS_CANCELED = 'canceled';
     public const STATUS_COMPLETED = 'completed';
+
+    public const TYPE_URL = 'url';
+    public const TYPE_TWIML = 'twiml';
+
+    /**
+     * @var int
+     */
+    public $contentType = null;
 
     /**
      * @var null|string
@@ -35,9 +46,36 @@ class TwilioCallMessage extends TwilioMessage
      */
     public function url(string $url): self
     {
+        $this->contentType(self::TYPE_URL);
         $this->content = $url;
 
         return $this;
+    }
+
+    /**
+     * Set the message twiml.
+     *
+     * @param  string $twiml
+     * @return $this
+     */
+    public function twiml(VoiceResponse $response): self
+    {
+        $this->contentType(self::TYPE_TWIML);
+        $this->content = (string) $response;
+
+        return $this;
+    }
+
+    protected function contentType(string $contentType)
+    {
+        if (
+            ! is_null($this->contentType)
+            && $contentType !== $this->contentType
+        ) {
+            InvalidConfigException::multipleContentTypes();
+        }
+
+        $this->contentType = $contentType;
     }
 
     /**

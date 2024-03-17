@@ -126,7 +126,7 @@ class Twilio
         }
 
         $params = [
-            'url' => trim($message->content),
+            $message->contentType => trim($message->content),
         ];
 
         $this->fillOptionalParams($params, $message, [

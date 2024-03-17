@@ -10,4 +10,9 @@ class InvalidConfigException extends \Exception
     {
         return new self('Missing config. You must set either the username & password or SID and auth token');
     }
+
+    public static function multipleContentTypes(): self
+    {
+        return new self('Unable to use URL and TWIML call types simultaneously. You can use only one type');
+    }
 }

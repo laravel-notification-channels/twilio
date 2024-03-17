@@ -132,7 +132,7 @@ class AccountApproved extends Notification
 }
 ```
 
-Or create a Twilio call:
+Or create a Twilio call, using either an external TwiML url:
 
 ``` php
 use NotificationChannels\Twilio\TwilioChannel;
@@ -150,6 +150,32 @@ class AccountApproved extends Notification
     {
         return (new TwilioCallMessage())
             ->url("http://example.com/your-twiml-url");
+    }
+}
+```
+
+Or create a Twilio call, and send a TwiML response directly:
+
+``` php
+use NotificationChannels\Twilio\TwilioChannel;
+use NotificationChannels\Twilio\TwilioCallMessage;
+use Illuminate\Notifications\Notification;
+use Twilio\TwiML\VoiceResponse;
+
+class AccountApproved extends Notification
+{
+    public function via($notifiable)
+    {
+        return [TwilioChannel::class];
+    }
+
+    public function toTwilio($notifiable)
+    {
+        return (new TwilioCallMessage())
+            ->twiml(
+                (new VoiceResponse())
+                    ->say('Hello world')
+            );
     }
 }
 ```
@@ -175,6 +201,9 @@ public function routeNotificationForTwilio()
 
 - `from('')`: Accepts a phone to use as the notification sender.
 - `url('')`: Accepts an url for the call TwiML.
+- `twiml(VoiceResponse)`: Accepts a \Twilio\TwiML\VoiceResponse containing the call TwiML.
+
+> You can use *either* url() *or* twiml() on a TwilioCallMessage object, not both.
 
 ## Changelog
 
