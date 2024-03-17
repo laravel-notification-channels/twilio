@@ -44,9 +44,7 @@ class TwilioChannel
     public function send($notifiable, Notification $notification)
     {
         try {
-            $to = $this->getTo($notifiable, $notification);
             $message = $notification->toTwilio($notifiable);
-            $useSender = $this->canReceiveAlphanumericSender($notifiable);
 
             if (is_string($message)) {
                 $message = new TwilioSmsMessage($message);
@@ -55,6 +53,9 @@ class TwilioChannel
             if (! $message instanceof TwilioMessage) {
                 throw CouldNotSendNotification::invalidMessageObject($message);
             }
+
+            $to = $this->getTo($notifiable, $notification, $message);
+            $useSender = $this->canReceiveAlphanumericSender($notifiable);
 
             return $this->twilio->sendMessage($message, $to, $useSender);
         } catch (Exception $exception) {
@@ -79,13 +80,17 @@ class TwilioChannel
      * Get the address to send a notification to.
      *
      * @param mixed $notifiable
-     * @param Notification|null $notification
+     * @param Notification $notification
+     * @param TwilioMessage $message
      *
      * @return mixed
      * @throws CouldNotSendNotification
      */
-    protected function getTo($notifiable, $notification = null)
+    protected function getTo($notifiable, $notification, $message)
     {
+        if ($message->getTo()) {
+            return $message->getTo();
+        }
         if ($notifiable->routeNotificationFor(self::class, $notification)) {
             return $notifiable->routeNotificationFor(self::class, $notification);
         }
