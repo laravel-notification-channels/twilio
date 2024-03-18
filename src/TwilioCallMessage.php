@@ -7,6 +7,9 @@ class TwilioCallMessage extends TwilioMessage
     public const STATUS_CANCELED = 'canceled';
     public const STATUS_COMPLETED = 'completed';
 
+    public const MACHINE_DETECTION_ENABLE = 'Enable';
+    public const MACHINE_DETECTION_DETECT_MESSAGE_END = 'DetectMessageEnd';
+
     /**
      * @var null|string
      */

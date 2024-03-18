@@ -50,7 +50,7 @@ class TwilioCallMessageTest extends TwilioMessageTest
         $message->statusCallbackMethod('PUT');
         $message->fallbackUrl('http://example.com');
         $message->fallbackMethod('PUT');
-        $message->machineDetection('Enable');
+        $message->machineDetection(TwilioCallMessage::MACHINE_DETECTION_ENABLE);
 
         $this->assertEquals(TwilioCallMessage::STATUS_CANCELED, $message->status);
         $this->assertEquals('PUT', $message->method);
@@ -58,6 +58,6 @@ class TwilioCallMessageTest extends TwilioMessageTest
         $this->assertEquals('PUT', $message->statusCallbackMethod);
         $this->assertEquals('http://example.com', $message->fallbackUrl);
         $this->assertEquals('PUT', $message->fallbackMethod);
-        $this->assertEquals('Enable', $message->machineDetection);
+        $this->assertEquals(TwilioCallMessage::MACHINE_DETECTION_ENABLE, $message->machineDetection);
     }
 }
