@@ -1,46 +1,48 @@
 name: PHP
 
-on: [push, pull_request]
+on:
+  - push
+  - pull_request
 
 jobs:
   run:
     runs-on: ubuntu-latest
+
     strategy:
       max-parallel: 15
       fail-fast: false
       matrix:
-        laravel-version: ['5.8.*', '^6.0', '^7.0', '^8.0', '^9.0']
-        php-version: ['7.3', '7.4', '8.0', '8.1']
+        laravel-version: ['10.*', '11.0', ^8.0, ^9.0]
+        php-version: ['8.0', '8.1', '8.2']
         exclude:
-          - laravel-version: '5.8.*'
+          - laravel-version: 11.*
             php-version: '8.0'
-          - laravel-version: '5.8.*'
+          - laravel-version: 11.*
             php-version: '8.1'
-          - laravel-version: '^6.0'
-            php-version: '8.1'
-          - laravel-version: '^7.0'
-            php-version: '8.1'
-          - laravel-version: '^9.0'
-            php-version: '7.3'
-          - laravel-version: '^9.0'
-            php-version: '7.4'
+
     name: PHP ${{ matrix.php-version }} on Laravel ${{ matrix.laravel-version }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@master
+
       - name: Setup PHP
         uses: shivammathur/setup-php@master
         with:
           php-version: ${{ matrix.php-version }}
           extension-csv: mbstring, xdebug
           coverage: xdebug
+
       - name: Install dependencies
         run: |
           composer require --no-update --no-interaction "illuminate/support:${{ matrix.laravel-version }}"
           composer update --no-interaction --prefer-dist --no-suggest
+
       - name: Lint composer.json
         run: composer validate
+
       - name: Run Tests
         run: composer test:unit
+
       - name: Run Integration Tests
         run: composer test:integration

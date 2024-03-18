@@ -83,6 +83,28 @@ class IntegrationTest extends MockeryTestCase
     }
 
     /** @test */
+    public function it_can_send_a_sms_message_using_url_shortener()
+    {
+        $message = TwilioSmsMessage::create('Message text');
+        $this->notification->shouldReceive('toTwilio')->andReturn($message);
+
+        $config = new TwilioConfig([
+            'from' => '+31612345678',
+            'ShortenUrls' => true,
+        ]);
+        $twilio = new Twilio($this->twilioService, $config);
+        $channel = new TwilioChannel($twilio, $this->events);
+
+        $this->smsMessageWillBeSentToTwilioWith('+22222222222', [
+            'from' => '+31612345678',
+            'body' => 'Message text',
+            'ShortenUrls' => 'true',
+        ]);
+
+        $channel->send(new NotifiableWithAttribute(), $this->notification);
+    }
+
+    /** @test */
     public function it_can_send_a_sms_message_using_alphanumeric_sender()
     {
         $message = TwilioSmsMessage::create('Message text');

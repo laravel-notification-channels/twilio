@@ -8,6 +8,7 @@ return [
 
     'from' => env('TWILIO_FROM'), // optional
     'alphanumeric_sender' => env('TWILIO_ALPHA_SENDER'),
+    'shorten_urls' => env('TWILIO_SHORTEN_URLS', false), // optional, enable twilio URL shortener
 
     /**
      * See https://www.twilio.com/docs/sms/services.

@@ -78,4 +78,9 @@ class TwilioConfig
 
         return in_array($code, $this->getIgnoredErrorCodes(), true);
     }
+
+    public function isShortenUrlsEnabled(): bool
+    {
+        return $this->config['shorten_urls'] ?? false;
+    }
 }
