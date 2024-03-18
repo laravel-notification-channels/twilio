@@ -7,6 +7,9 @@ class TwilioCallMessage extends TwilioMessage
     public const STATUS_CANCELED = 'canceled';
     public const STATUS_COMPLETED = 'completed';
 
+    public const MACHINE_DETECTION_ENABLE = 'Enable';
+    public const MACHINE_DETECTION_DETECT_MESSAGE_END = 'DetectMessageEnd';
+
     /**
      * @var null|string
      */
@@ -26,6 +29,11 @@ class TwilioCallMessage extends TwilioMessage
      * @var null|string
      */
     public $fallbackMethod;
+
+    /**
+     * @var null|string
+     */
+    public $machineDetection;
 
     /**
      * Set the message url.
@@ -88,6 +96,19 @@ class TwilioCallMessage extends TwilioMessage
     public function fallbackMethod(string $fallbackMethod): self
     {
         $this->fallbackMethod = $fallbackMethod;
+
+        return $this;
+    }
+
+    /**
+     * Set the answering machine detection mode.
+     *
+     * @param string $machineDetection
+     * @return $this
+     */
+    public function machineDetection(string $machineDetection): self
+    {
+        $this->machineDetection = $machineDetection;
 
         return $this;
     }

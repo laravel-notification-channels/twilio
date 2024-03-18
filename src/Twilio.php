@@ -136,6 +136,7 @@ class Twilio
             'status',
             'fallbackUrl',
             'fallbackMethod',
+            'machineDetection',
         ]);
 
         if (! $from = $this->getFrom($message)) {
