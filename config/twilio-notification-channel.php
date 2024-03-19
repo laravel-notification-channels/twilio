@@ -34,4 +34,9 @@ return [
         21614, // 'To' number is not a valid mobile number
         21408, // Permission to send an SMS has not been enabled for the region indicated by the 'To' number
     ],
+
+    /**
+     * The HTTP proxy to tunnel requests through. @see https://curl.se/libcurl/c/CURLOPT_PROXY.html
+     */
+    'http_proxy' => env('TWILIO_HTTP_PROXY'),
 ];

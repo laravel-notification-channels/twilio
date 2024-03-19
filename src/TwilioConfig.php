@@ -70,6 +70,11 @@ class TwilioConfig
         return $this->config['ignored_error_codes'] ?? [];
     }
 
+    public function getProxy(): ?string
+    {
+        return $this->config['http_proxy'] ?? null;
+    }
+
     public function isIgnoredErrorCode(int $code): bool
     {
         if (in_array('*', $this->getIgnoredErrorCodes(), true)) {

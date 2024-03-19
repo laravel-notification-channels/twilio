@@ -71,6 +71,10 @@ class TwilioTest extends MockeryTestCase
             ->once()
             ->andReturn(null);
 
+        $this->config->shouldReceive('getProxy')
+             ->once()
+             ->andReturn(null);
+
         $this->twilioService->messages->shouldReceive('create')
             ->atLeast()->once()
             ->with('+1111111111', [
@@ -112,6 +116,10 @@ class TwilioTest extends MockeryTestCase
             ->once()
             ->andReturn(null);
 
+        $this->config->shouldReceive('getProxy')
+            ->once()
+            ->andReturn(null);
+
         $this->twilioService->messages->shouldReceive('create')
             ->atLeast()->once()
             ->with('+1111111111', [
@@ -149,6 +157,10 @@ class TwilioTest extends MockeryTestCase
             ->once()
             ->andReturn(null);
 
+        $this->config->shouldReceive('getProxy')
+             ->once()
+             ->andReturn(null);
+
         $this->twilioService->messages->shouldReceive('create')
             ->atLeast()->once()
             ->with('+1111111111', [
@@ -176,6 +188,10 @@ class TwilioTest extends MockeryTestCase
         $this->config->shouldReceive('getDebugTo')
             ->once()
             ->andReturn(null);
+
+        $this->config->shouldReceive('getProxy')
+             ->once()
+             ->andReturn(null);
 
         $this->twilioService->messages->shouldReceive('create')
             ->atLeast()->once()
@@ -237,6 +253,10 @@ class TwilioTest extends MockeryTestCase
             ->once()
             ->andReturn(null);
 
+        $this->config->shouldReceive('getProxy')
+             ->once()
+             ->andReturn(null);
+
         $this->twilio->sendMessage($smsMessage, null);
     }
 
@@ -273,6 +293,10 @@ class TwilioTest extends MockeryTestCase
         $this->config->shouldReceive('getServiceSid')
             ->once()
             ->andReturn(null);
+
+        $this->config->shouldReceive('getProxy')
+             ->once()
+             ->andReturn(null);
 
         $this->twilioService->messages->shouldReceive('create')
             ->atLeast()->once()
