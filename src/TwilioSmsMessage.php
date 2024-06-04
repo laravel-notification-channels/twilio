@@ -3,7 +3,6 @@
 namespace NotificationChannels\Twilio;
 
 use DateTime;
-use Illuminate\Support\Facades\Date;
 
 class TwilioSmsMessage extends TwilioMessage
 {
