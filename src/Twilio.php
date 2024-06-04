@@ -2,6 +2,7 @@
 
 namespace NotificationChannels\Twilio;
 
+use DateTime;
 use NotificationChannels\Twilio\Exceptions\CouldNotSendNotification;
 use Twilio\Exceptions\TwilioException;
 use Twilio\Rest\Api\V2010\Account\CallInstance;
@@ -74,6 +75,11 @@ class Twilio
 
         if ($messagingServiceSid = $this->getMessagingServiceSid($message)) {
             $params['messagingServiceSid'] = $messagingServiceSid;
+
+            if ($sendAt = $this->getSendAt($message)) {
+                $params['sendAt'] = $sendAt;
+                $params['scheduleType'] = 'fixed';
+            }
         }
 
         if ($this->config->isShortenUrlsEnabled()) {
@@ -169,6 +175,17 @@ class Twilio
     protected function getMessagingServiceSid(TwilioSmsMessage $message): ?string
     {
         return $message->getMessagingServiceSid() ?: $this->config->getServiceSid();
+    }
+
+    /**
+     * Get the send at time from the message.
+     *
+     * @param TwilioSmsMessage $message
+     * @return DateTime|null
+     */
+    protected function getSendAt(TwilioSmsMessage $message): ?DateTime
+    {
+        return $message->getSendAt();
     }
 
     /**

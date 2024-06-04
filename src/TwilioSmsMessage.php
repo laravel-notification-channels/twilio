@@ -2,6 +2,9 @@
 
 namespace NotificationChannels\Twilio;
 
+use DateTime;
+use Illuminate\Support\Facades\Date;
+
 class TwilioSmsMessage extends TwilioMessage
 {
     /**
@@ -33,6 +36,11 @@ class TwilioSmsMessage extends TwilioMessage
      * @var null|bool
      */
     public $provideFeedback;
+
+    /**
+     * @var null|DateTime|string
+     */
+    public $sendAt;
 
     /**
      * @var null|int
@@ -143,6 +151,24 @@ class TwilioSmsMessage extends TwilioMessage
         $this->provideFeedback = $provideFeedback;
 
         return $this;
+    }
+
+    /**
+     * Set the date and time at which the message will be sent.
+     */
+    public function sendAt(DateTime $sendAt): self
+    {
+        $this->sendAt = $sendAt;
+
+        return $this;
+    }
+
+    /**
+     * Get sendAt of this message.
+     */
+    public function getSendAt(): ?DateTime
+    {
+        return $this->sendAt;
     }
 
     /**
