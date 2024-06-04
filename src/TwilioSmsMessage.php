@@ -37,7 +37,7 @@ class TwilioSmsMessage extends TwilioMessage
     public $provideFeedback;
 
     /**
-     * @var null|DateTime|string
+     * @var null|DateTime
      */
     public $sendAt;
 
