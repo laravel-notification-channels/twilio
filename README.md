@@ -170,6 +170,7 @@ public function routeNotificationForTwilio()
 - `from('')`: Accepts a phone to use as the notification sender.
 - `content('')`: Accepts a string value for the notification body.
 - `messagingServiceSid('')`: Accepts a messaging service SID to handle configuration.
+- `sendAt(DateTime)`: Accepts a DateTime object to schedule a message. Only is used if messaging service is set.
 
 #### TwilioCallMessage
 

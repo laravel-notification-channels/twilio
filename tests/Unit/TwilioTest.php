@@ -190,6 +190,37 @@ class TwilioTest extends MockeryTestCase
     }
 
     /** @test */
+    public function it_can_schedule_a_sms_message_to_twilio_with_messaging_service()
+    {
+        $message = new TwilioSmsMessage('Message text');
+
+        $this->config->shouldReceive('getFrom')
+            ->once()
+            ->andReturn('+1234567890');
+
+        $this->config->shouldReceive('getServiceSid')
+            ->once()
+            ->andReturn('service_sid');
+
+        $this->config->shouldReceive('getDebugTo')
+            ->once()
+            ->andReturn(null);
+
+        $this->twilioService->messages->shouldReceive('create')
+            ->atLeast()->once()
+            ->with('+1111111111', [
+                'from' => '+1234567890',
+                'body' => 'Message text',
+                'messagingServiceSid' => 'service_sid',
+                "sendAt" => new \DateTime('+30 min'),
+                "scheduleType" => "fixed"
+            ])
+            ->andReturn(Mockery::mock(MessageInstance::class));
+
+        $this->twilio->sendMessage($message, '+1111111111');
+    }
+
+    /** @test */
     public function it_can_send_a_call_to_twilio()
     {
         $message = new TwilioCallMessage('http://example.com');
