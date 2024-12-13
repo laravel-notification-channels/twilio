@@ -131,6 +131,32 @@ class AccountApproved extends Notification
 }
 ```
 
+You can also send using Content Templates:
+
+``` php
+use NotificationChannels\Twilio\TwilioChannel;
+use NotificationChannels\Twilio\TwilioContentTemplateMessage;
+use Illuminate\Notifications\Notification;
+
+class AccountApproved extends Notification
+{
+    public function via($notifiable)
+    {
+        return [TwilioChannel::class];
+    }
+
+    public function toTwilio($notifiable)
+    {
+        return (new TwilioContentTemplateMessage())
+            ->contentSid("HXXXXXXXXXXXXXXXXXXXXXXXX")
+            ->contentVariables([
+                '1' => 'John Doe',
+                '2' => 'ACME Inc.',
+            ]);
+    }
+}
+```
+
 Or create a Twilio call:
 
 ``` php
