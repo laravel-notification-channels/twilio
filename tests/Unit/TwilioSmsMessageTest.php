@@ -70,7 +70,7 @@ class TwilioSmsMessageTest extends TwilioMessageTestCase
         $message->contentRetention('retain');
         $message->addressRetention('obfuscate');
         $message->smartEncoded(true);
-        $message->persistentAction(['action' => 'action', 'value' => 'value']);
+        $message->persistentAction(['action1', 'action2']);
         $message->scheduleType('fixed');
         $message->sendAt('2021-01-01 00:00:00');
         $message->sendAsMms(true);
@@ -87,7 +87,7 @@ class TwilioSmsMessageTest extends TwilioMessageTestCase
         $this->assertEquals('retain', $message->contentRetention);
         $this->assertEquals('obfuscate', $message->addressRetention);
         $this->assertEquals(true, $message->smartEncoded);
-        $this->assertEquals(['action' => 'action', 'value' => 'value'], $message->persistentAction);
+        $this->assertEquals(['action1', 'action2'], $message->persistentAction);
         $this->assertEquals('fixed', $message->scheduleType);
         $this->assertEquals('2021-01-01 00:00:00', $message->sendAt);
         $this->assertEquals(true, $message->sendAsMms);
