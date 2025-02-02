@@ -192,6 +192,8 @@ class TwilioSmsMessage extends TwilioMessage
 
     /**
      * For Messaging Services only: Include this parameter with a value of fixed in conjunction with the send_time parameter in order to schedule a Message.
+     * Possible values:
+     * - fixed
      */
     public function scheduleType(string $scheduleType): self
     {
