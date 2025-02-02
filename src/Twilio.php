@@ -81,7 +81,6 @@ class Twilio
             'maxPrice',
             'provideFeedback',
             'validityPeriod',
-            'provideFeedback',
             'attempt',
             'validityPeriod',
             'forceDelivery',

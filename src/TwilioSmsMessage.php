@@ -18,6 +18,26 @@ class TwilioSmsMessage extends TwilioMessage
 
     public ?int $validityPeriod = null;
 
+    public ?int $attempt = null;
+
+    public ?string $contentRetention = null;
+
+    public ?string $addressRetention = null;
+
+    public ?bool $smartEncoded = null;
+
+    public ?array $persistentAction = null;
+
+    public ?string $scheduleType = null;
+
+    public ?string $sendAt = null;
+
+    public ?bool $sendAsMms = null;
+
+    public ?string $contentVariables = null;
+
+    public ?string $riskCheck = null;
+
     /**
      * Get the from address of this message.
      */
@@ -108,6 +128,120 @@ class TwilioSmsMessage extends TwilioMessage
     public function validityPeriod(int $validityPeriodSeconds): self
     {
         $this->validityPeriod = $validityPeriodSeconds;
+
+        return $this;
+    }
+
+    /**
+     * Total number of attempts made to send the message (including the current one).
+     */
+    public function attempt(int $attempt): self
+    {
+        $this->attempt = $attempt;
+
+        return $this;
+    }
+
+    /**
+     * Determines if the message content can be stored or redacted based on privacy settings
+     * Possible values:
+     * - retain
+     * - discard
+     */
+    public function contentRetention(string $contentRetention): self
+    {
+        $this->contentRetention = $contentRetention;
+
+        return $this;
+    }
+
+    /**
+     * Determines if the address can be stored or obfuscated based on privacy settings
+     * Possible values:
+     * - retain
+     * - obfuscate
+     */
+    public function addressRetention(string $addressRetention): self
+    {
+        $this->addressRetention = $addressRetention;
+
+        return $this;
+    }
+
+    /**
+     * Whether to detect Unicode characters that have a similar GSM-7 character and replace them
+     */
+    public function smartEncoded(bool $smartEncoded): self
+    {
+        $this->smartEncoded = $smartEncoded;
+
+        return $this;
+    }
+
+    /**
+     * Rich actions for non-SMS/MMS channels. Used for sending location in WhatsApp messages.
+     * @param array<string> $persistentAction
+     * @return $this
+     */
+    public function persistentAction(array $persistentAction): self
+    {
+        $this->persistentAction = $persistentAction;
+
+        return $this;
+    }
+
+    /**
+     * For Messaging Services only: Include this parameter with a value of fixed in conjunction with the send_time parameter in order to schedule a Message.
+     */
+    public function scheduleType(string $scheduleType): self
+    {
+        $this->scheduleType = $scheduleType;
+
+        return $this;
+    }
+
+    /**
+     * The time that Twilio will send the message.
+     * Must be in ISO 8601 format.
+     */
+    public function sendAt(string $sendAt): self
+    {
+        $this->sendAt = $sendAt;
+
+        return $this;
+    }
+
+    /**
+     * If set to true, Twilio delivers the message as a single MMS message, regardless of the presence of media.
+     */
+    public function sendAsMms(bool $sendAsMms): self
+    {
+        $this->sendAsMms = $sendAsMms;
+
+        return $this;
+    }
+
+    /**
+     * For Content Editor/API only: Key-value pairs of Template variables and their substitution values.
+     * content_sid parameter must also be provided.
+     * If values are not defined in the content_variables parameter, the Template's default placeholder values are used.
+     */
+    public function contentVariables(string $contentVariables): self
+    {
+        $this->contentVariables = $contentVariables;
+
+        return $this;
+    }
+
+    /**
+     * Include this parameter with a value of "disable" to skip any kind of risk check on the respective message request.
+     * Possible values:
+     * - enable (default)
+     * - disable
+     */
+    public function riskCheck(string $riskCheck): self
+    {
+        $this->riskCheck = $riskCheck;
 
         return $this;
     }

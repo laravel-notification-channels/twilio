@@ -66,6 +66,16 @@ class TwilioSmsMessageTest extends TwilioMessageTestCase
         $message->maxPrice(0.05);
         $message->provideFeedback(true);
         $message->validityPeriod(120);
+        $message->attempt(3);
+        $message->contentRetention('retain');
+        $message->addressRetention('obfuscate');
+        $message->smartEncoded(true);
+        $message->persistentAction(['action' => 'action', 'value' => 'value']);
+        $message->scheduleType('fixed');
+        $message->sendAt('2021-01-01 00:00:00');
+        $message->sendAsMms(true);
+        $message->contentVariables('{"name": "John"}');
+        $message->riskCheck('disable');
 
         $this->assertEquals('http://example.com', $message->statusCallback);
         $this->assertEquals('PUT', $message->statusCallbackMethod);
@@ -73,5 +83,15 @@ class TwilioSmsMessageTest extends TwilioMessageTestCase
         $this->assertEquals(0.05, $message->maxPrice);
         $this->assertEquals(true, $message->provideFeedback);
         $this->assertEquals(120, $message->validityPeriod);
+        $this->assertEquals(3, $message->attempt);
+        $this->assertEquals('retain', $message->contentRetention);
+        $this->assertEquals('obfuscate', $message->addressRetention);
+        $this->assertEquals(true, $message->smartEncoded);
+        $this->assertEquals(['action' => 'action', 'value' => 'value'], $message->persistentAction);
+        $this->assertEquals('fixed', $message->scheduleType);
+        $this->assertEquals('2021-01-01 00:00:00', $message->sendAt);
+        $this->assertEquals(true, $message->sendAsMms);
+        $this->assertEquals('{"name": "John"}', $message->contentVariables);
+        $this->assertEquals('disable', $message->riskCheck);
     }
 }
