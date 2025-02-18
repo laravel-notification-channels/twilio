@@ -1,45 +1,56 @@
 name: CI
 
-on: [push, pull_request]
+on:
+  - push
+  - pull_request
 
 jobs:
   phplint:
     runs-on: ubuntu-latest
 
+
     name: PHP Linting (Pint)
+
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: "laravel-pint"
+
+      - name: laravel-pint
         uses: aglipanci/laravel-pint-action@latest
         with:
           preset: laravel
           verboseMode: true
           testMode: true
-          configPath: "pint.json"
+          configPath: pint.json
           pintVersion: 1.18.2
           onlyDirty: true
 
   test:
     runs-on: ubuntu-latest
+
     strategy:
       max-parallel: 15
       fail-fast: false
       matrix:
         php: [8.3, 8.2]
-        laravel: [11.*]
+        laravel: ['11.*', '12.*']
         stability: [prefer-lowest, prefer-stable]
         include:
           - laravel: 11.*
             testbench: 9.*
+          - laravel: 12.*
+            testbench: 10.*
+
 
     name: PHP${{ matrix.php }} - L${{ matrix.laravel }} - ${{ matrix.stability }}
+
 
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
 
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
@@ -48,16 +59,20 @@ jobs:
           extensions: mbstring, xdebug
           coverage: xdebug
 
+
       - name: Install dependencies
         run: |
           composer require "illuminate/support:${{ matrix.laravel }}" "orchestra/testbench:${{ matrix.testbench }}" --no-interaction --no-update
           composer update --${{ matrix.stability }} --prefer-dist --no-interaction --no-suggest
 
+
       - name: Lint composer.json
         run: composer validate
 
+
       - name: Run Tests
         run: composer test:unit
+
 
       - name: Run Integration Tests
         run: composer test:integration
