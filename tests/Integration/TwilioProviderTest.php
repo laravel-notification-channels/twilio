@@ -9,11 +9,12 @@ use NotificationChannels\Twilio\Tests\IntegrationTestCase;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioConfig;
 use NotificationChannels\Twilio\TwilioProvider;
+use PHPUnit\Framework\Attributes\Test;
 use Twilio\Rest\Client;
 
 class TwilioProviderTest extends IntegrationTestCase
 {
-    /** @test */
+    #[Test]
     public function it_cannot_create_the_application_without_config()
     {
         $this->expectException(InvalidConfigException::class);
@@ -21,7 +22,7 @@ class TwilioProviderTest extends IntegrationTestCase
         $this->app->get(TwilioChannel::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_cannot_create_the_application_without_sid()
     {
         $this->app['config']->set('twilio-notification-channel.username', 'test');
@@ -31,7 +32,7 @@ class TwilioProviderTest extends IntegrationTestCase
         $this->app->get(TwilioChannel::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_the_application_with_sid()
     {
         $this->app['config']->set('twilio-notification-channel.username', 'test');
@@ -41,7 +42,7 @@ class TwilioProviderTest extends IntegrationTestCase
         $this->assertInstanceOf(TwilioChannel::class, $this->app->get(TwilioChannel::class));
     }
 
-    /** @test */
+    #[Test]
     public function it_can_create_the_application_with_token_auth()
     {
         $this->app['config']->set('twilio-notification-channel.auth_token', 'token');
@@ -50,7 +51,7 @@ class TwilioProviderTest extends IntegrationTestCase
         $this->assertInstanceOf(TwilioChannel::class, $this->app->get(TwilioChannel::class));
     }
 
-    /** @test */
+    #[Test]
     public function it_provides_three_classes()
     {
         $provides = (new TwilioProvider($this->app))->provides();

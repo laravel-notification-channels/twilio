@@ -3,6 +3,7 @@
 namespace NotificationChannels\Twilio\Tests\Unit;
 
 use NotificationChannels\Twilio\TwilioCallMessage;
+use PHPUnit\Framework\Attributes\Test;
 
 class TwilioCallMessageTest extends TwilioMessageTestCase
 {
@@ -16,7 +17,7 @@ class TwilioCallMessageTest extends TwilioMessageTestCase
         $this->message = new TwilioCallMessage;
     }
 
-    /** @test */
+    #[Test]
     public function it_can_accept_a_message_when_constructing_a_message()
     {
         $message = new TwilioCallMessage('http://example.com');
@@ -24,7 +25,7 @@ class TwilioCallMessageTest extends TwilioMessageTestCase
         $this->assertEquals('http://example.com', $message->content);
     }
 
-    /** @test */
+    #[Test]
     public function it_provides_a_create_method()
     {
         $message = TwilioCallMessage::create('http://example.com');
@@ -32,7 +33,7 @@ class TwilioCallMessageTest extends TwilioMessageTestCase
         $this->assertEquals('http://example.com', $message->content);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_set_the_url()
     {
         $this->message->url('http://example.com');
@@ -40,7 +41,7 @@ class TwilioCallMessageTest extends TwilioMessageTestCase
         $this->assertEquals('http://example.com', $this->message->content);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_set_optional_parameters()
     {
         $message = TwilioCallMessage::create('myMessage');

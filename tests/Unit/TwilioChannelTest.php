@@ -13,6 +13,7 @@ use NotificationChannels\Twilio\TwilioCallMessage;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioConfig;
 use NotificationChannels\Twilio\TwilioSmsMessage;
+use PHPUnit\Framework\Attributes\Test;
 use Twilio\Exceptions\RestException;
 
 class TwilioChannelTest extends MockeryTestCase
@@ -37,7 +38,7 @@ class TwilioChannelTest extends MockeryTestCase
         $this->channel = new TwilioChannel($this->twilio, $this->dispatcher);
     }
 
-    /** @test */
+    #[Test]
     public function it_will_not_send_a_message_if_not_enabled()
     {
         $notifiable = new Notifiable;
@@ -54,7 +55,7 @@ class TwilioChannelTest extends MockeryTestCase
         $this->assertNull($result);
     }
 
-    /** @test */
+    #[Test]
     public function it_will_not_send_a_message_without_known_receiver()
     {
         $notifiable = new Notifiable;
@@ -75,7 +76,7 @@ class TwilioChannelTest extends MockeryTestCase
         $this->assertNull($result);
     }
 
-    /** @test */
+    #[Test]
     public function it_will_send_a_sms_message_to_the_result_of_the_route_method_of_the_notifiable()
     {
         $notifiable = new NotifiableWithMethod;
@@ -91,7 +92,7 @@ class TwilioChannelTest extends MockeryTestCase
         $this->channel->send($notifiable, $notification);
     }
 
-    /** @test */
+    #[Test]
     public function it_will_send_a_sms_message_to_the_result_of_the_route_method_of_the_notifiable_if_it_uses_the_twilio_channel_explicitly()
     {
         $notifiable = new NotifiableWithTwilioChannel;
@@ -107,7 +108,7 @@ class TwilioChannelTest extends MockeryTestCase
         $this->channel->send($notifiable, $notification);
     }
 
-    /** @test */
+    #[Test]
     public function it_will_make_a_call_to_the_phone_number_attribute_of_the_notifiable()
     {
         $notifiable = new NotifiableWithAttribute;
@@ -123,7 +124,7 @@ class TwilioChannelTest extends MockeryTestCase
         $this->channel->send($notifiable, $notification);
     }
 
-    /** @test */
+    #[Test]
     public function it_will_convert_a_string_to_a_sms_message()
     {
         $notifiable = new NotifiableWithAttribute;
@@ -138,7 +139,7 @@ class TwilioChannelTest extends MockeryTestCase
         $this->channel->send($notifiable, $notification);
     }
 
-    /** @test */
+    #[Test]
     public function it_will_fire_an_event_in_case_of_an_invalid_message()
     {
         $notifiable = new NotifiableWithAttribute;
@@ -160,7 +161,7 @@ class TwilioChannelTest extends MockeryTestCase
         $this->channel->send($notifiable, $notification);
     }
 
-    /** @test */
+    #[Test]
     public function it_will_ignore_specific_error_codes()
     {
         $notifiable = new NotifiableWithAttribute;
@@ -184,7 +185,7 @@ class TwilioChannelTest extends MockeryTestCase
         $this->channel->send($notifiable, $notification);
     }
 
-    /** @test */
+    #[Test]
     public function it_will_rethrow_non_ignored_error_codes()
     {
         $notifiable = new NotifiableWithAttribute;
@@ -210,7 +211,7 @@ class TwilioChannelTest extends MockeryTestCase
         $this->channel->send($notifiable, $notification);
     }
 
-    /** @test */
+    #[Test]
     public function it_will_ignore_all_error_codes()
     {
         $notifiable = new NotifiableWithAttribute;
@@ -232,7 +233,7 @@ class TwilioChannelTest extends MockeryTestCase
         $this->channel->send($notifiable, $notification);
     }
 
-    /** @test */
+    #[Test]
     public function it_will_send_using_alphanumeric_if_notifiable_can_receive()
     {
         $notifiable = new NotifiableWithAlphanumericSender;

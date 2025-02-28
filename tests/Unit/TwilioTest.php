@@ -12,6 +12,7 @@ use NotificationChannels\Twilio\TwilioConfig;
 use NotificationChannels\Twilio\TwilioMessage;
 use NotificationChannels\Twilio\TwilioMmsMessage;
 use NotificationChannels\Twilio\TwilioSmsMessage;
+use PHPUnit\Framework\Attributes\Test;
 use Twilio\Rest\Api\V2010\Account\CallInstance;
 use Twilio\Rest\Api\V2010\Account\CallList;
 use Twilio\Rest\Api\V2010\Account\MessageInstance;
@@ -48,7 +49,7 @@ class TwilioTest extends MockeryTestCase
         $this->twilio = new Twilio($this->twilioService, $this->config);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_a_sms_message_to_twilio()
     {
         $message = new TwilioSmsMessage('Message text');
@@ -92,7 +93,7 @@ class TwilioTest extends MockeryTestCase
         $this->twilio->sendMessage($message, '+1111111111');
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_a_mms_message_to_twilio()
     {
         $message = new TwilioMmsMessage('Message text');
@@ -138,7 +139,7 @@ class TwilioTest extends MockeryTestCase
         $this->twilio->sendMessage($message, '+1111111111');
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_a_sms_message_to_twilio_with_alphanumeric_sender()
     {
         $message = new TwilioSmsMessage('Message text');
@@ -172,7 +173,7 @@ class TwilioTest extends MockeryTestCase
         $this->twilio->sendMessage($message, '+1111111111', true);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_a_sms_message_to_twilio_with_messaging_service()
     {
         $message = new TwilioSmsMessage('Message text');
@@ -205,7 +206,7 @@ class TwilioTest extends MockeryTestCase
         $this->twilio->sendMessage($message, '+1111111111');
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_a_call_to_twilio()
     {
         $message = new TwilioCallMessage('http://example.com');
@@ -237,7 +238,7 @@ class TwilioTest extends MockeryTestCase
         $this->twilio->sendMessage($message, '+1111111111');
     }
 
-    /** @test */
+    #[Test]
     public function it_will_throw_an_exception_in_case_of_a_missing_from_number()
     {
         $this->expectException(CouldNotSendNotification::class);
@@ -264,7 +265,7 @@ class TwilioTest extends MockeryTestCase
         $this->twilio->sendMessage($smsMessage, null);
     }
 
-    /** @test */
+    #[Test]
     public function it_will_throw_an_exception_in_case_of_an_unrecognized_message_object()
     {
         $this->expectException(CouldNotSendNotification::class);
@@ -273,7 +274,7 @@ class TwilioTest extends MockeryTestCase
         $this->twilio->sendMessage(new InvalidMessage, null);
     }
 
-    /** @test */
+    #[Test]
     public function it_should_use_universal_to()
     {
         $debugTo = '+1222222222';

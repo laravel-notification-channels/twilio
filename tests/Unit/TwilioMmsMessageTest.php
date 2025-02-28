@@ -3,6 +3,7 @@
 namespace NotificationChannels\Twilio\Tests\Unit;
 
 use NotificationChannels\Twilio\TwilioMmsMessage;
+use PHPUnit\Framework\Attributes\Test;
 
 class TwilioMmsMessageTest extends TwilioMessageTestCase
 {
@@ -13,7 +14,7 @@ class TwilioMmsMessageTest extends TwilioMessageTestCase
         $this->message = new TwilioMmsMessage;
     }
 
-    /** @test */
+    #[Test]
     public function it_can_accept_a_message_when_constructing_a_message()
     {
         $message = new TwilioMmsMessage('myMessage');
@@ -21,7 +22,7 @@ class TwilioMmsMessageTest extends TwilioMessageTestCase
         $this->assertEquals('myMessage', $message->content);
     }
 
-    /** @test */
+    #[Test]
     public function it_provides_a_create_method()
     {
         $message = TwilioMmsMessage::create('myMessage');
@@ -29,7 +30,7 @@ class TwilioMmsMessageTest extends TwilioMessageTestCase
         $this->assertEquals('myMessage', $message->content);
     }
 
-    /** @test */
+    #[Test]
     public function it_sets_alphanumeric_sender()
     {
         $message = TwilioMmsMessage::create('myMessage');
@@ -38,7 +39,7 @@ class TwilioMmsMessageTest extends TwilioMessageTestCase
         $this->assertEquals('TestSender', $message->alphaNumSender);
     }
 
-    /** @test */
+    #[Test]
     public function it_sets_media_url()
     {
         $message = TwilioMmsMessage::create('myMessage');
@@ -47,7 +48,7 @@ class TwilioMmsMessageTest extends TwilioMessageTestCase
         $this->assertEquals('https://picsum.photos/300', $message->mediaUrl);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_return_the_alphanumeric_sender_if_set()
     {
         $message = TwilioMmsMessage::create('myMessage');
@@ -56,7 +57,7 @@ class TwilioMmsMessageTest extends TwilioMessageTestCase
         $this->assertEquals('TestSender', $message->getFrom());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_set_optional_parameters()
     {
         $message = TwilioMmsMessage::create('myMessage');

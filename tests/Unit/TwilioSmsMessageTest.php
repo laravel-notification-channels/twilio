@@ -3,6 +3,7 @@
 namespace NotificationChannels\Twilio\Tests\Unit;
 
 use NotificationChannels\Twilio\TwilioSmsMessage;
+use PHPUnit\Framework\Attributes\Test;
 
 class TwilioSmsMessageTest extends TwilioMessageTestCase
 {
@@ -13,7 +14,7 @@ class TwilioSmsMessageTest extends TwilioMessageTestCase
         $this->message = new TwilioSmsMessage;
     }
 
-    /** @test */
+    #[Test]
     public function it_can_accept_a_message_when_constructing_a_message()
     {
         $message = new TwilioSmsMessage('myMessage');
@@ -21,7 +22,7 @@ class TwilioSmsMessageTest extends TwilioMessageTestCase
         $this->assertEquals('myMessage', $message->content);
     }
 
-    /** @test */
+    #[Test]
     public function it_provides_a_create_method()
     {
         $message = TwilioSmsMessage::create('myMessage');
@@ -29,7 +30,7 @@ class TwilioSmsMessageTest extends TwilioMessageTestCase
         $this->assertEquals('myMessage', $message->content);
     }
 
-    /** @test */
+    #[Test]
     public function it_sets_alphanumeric_sender()
     {
         $message = TwilioSmsMessage::create('myMessage');
@@ -38,7 +39,7 @@ class TwilioSmsMessageTest extends TwilioMessageTestCase
         $this->assertEquals('TestSender', $message->alphaNumSender);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_return_the_alphanumeric_sender_if_set()
     {
         $message = TwilioSmsMessage::create('myMessage');
@@ -47,7 +48,7 @@ class TwilioSmsMessageTest extends TwilioMessageTestCase
         $this->assertEquals('TestSender', $message->getFrom());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_return_the_messaging_service_sid_if_set()
     {
         $message = TwilioSmsMessage::create('myMessage');
@@ -56,7 +57,7 @@ class TwilioSmsMessageTest extends TwilioMessageTestCase
         $this->assertEquals('TestSid', $message->getMessagingServiceSid());
     }
 
-    /** @test */
+    #[Test]
     public function it_can_set_optional_parameters()
     {
         $message = TwilioSmsMessage::create('myMessage');
