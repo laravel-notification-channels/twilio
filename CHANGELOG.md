@@ -2,7 +2,11 @@
 
 All notable changes to `laravel-notification-channels/twilio` will be documented in this file.
 
-## 4.0.0
+## [4.1.0](https://github.com/laravel-notification-channels/twilio/releases/tag/4.1.0) (2025-03-03)
+
+- Added Laravel 12 support #155 #157
+
+## [4.0.0](https://github.com/laravel-notification-channels/twilio/releases/tag/4.0.0) (2024-11-26)
 
 - Added PHP Linting (Pint) to CI workflow
 - Additional tests to achieve 100% code coverage by @pascalbaljet
