@@ -5,6 +5,7 @@ All notable changes to `laravel-notification-channels/twilio` will be documented
 ## [4.1.0](https://github.com/laravel-notification-channels/twilio/releases/tag/4.1.0) (2025-03-03)
 
 - Added Laravel 12 support #155 #157
+- Added PHP 8.4 to CI workflow matrix
 
 ## [4.0.0](https://github.com/laravel-notification-channels/twilio/releases/tag/4.0.0) (2024-11-26)
 
