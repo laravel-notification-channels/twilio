@@ -3,6 +3,7 @@
 namespace NotificationChannels\Twilio\Tests\Unit;
 
 use NotificationChannels\Twilio\TwilioConfig;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 class TwilioConfigTest extends TestCase
@@ -12,7 +13,7 @@ class TwilioConfigTest extends TestCase
         return new TwilioConfig($config);
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_a_boolean_wether_it_is_is_enabled_or_not()
     {
         $this->assertTrue($this->config()->enabled()); // defaults to true
@@ -20,7 +21,7 @@ class TwilioConfigTest extends TestCase
         $this->assertFalse($this->config(['enabled' => false])->enabled());
     }
 
-    /** @test */
+    #[Test]
     public function it_defaults_to_null_for_config_keys_with_a_string_return_type()
     {
         $config = $this->config();
@@ -35,7 +36,7 @@ class TwilioConfigTest extends TestCase
         $this->assertNull($config->getDebugTo());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_a_string_for_config_keys_with_a_string_return_type()
     {
         $config = $this->config([
@@ -59,14 +60,14 @@ class TwilioConfigTest extends TestCase
         $this->assertEquals('valid-debug-to', $config->getDebugTo());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_an_array_of_ignored_codes()
     {
         $this->assertEquals([], $this->config()->getIgnoredErrorCodes()); // defaults to empty array
         $this->assertEquals([1, 2], $this->config(['ignored_error_codes' => [1, 2]])->getIgnoredErrorCodes());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_a_boolean_wether_the_error_code_is_ignored_or_not()
     {
         $config = $this->config(['ignored_error_codes' => [1, 2]]);
@@ -80,7 +81,7 @@ class TwilioConfigTest extends TestCase
         $this->assertTrue($config->isIgnoredErrorCode(3));
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_a_boolean_wether_shorten_urls_is_enabled_or_not()
     {
         $this->assertFalse($this->config()->isShortenUrlsEnabled()); // defaults to false
@@ -88,7 +89,7 @@ class TwilioConfigTest extends TestCase
         $this->assertFalse($this->config(['shorten_urls' => false])->isShortenUrlsEnabled());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_a_boolean_wether_token_auth_is_used_or_not()
     {
         // No values set...
@@ -102,7 +103,7 @@ class TwilioConfigTest extends TestCase
         $this->assertTrue($this->config(['auth_token' => 'valid', 'account_sid' => 'valid'])->usingTokenAuth());
     }
 
-    /** @test */
+    #[Test]
     public function it_returns_a_boolean_wether_username_password_auth_is_used_or_not()
     {
         // No values set...

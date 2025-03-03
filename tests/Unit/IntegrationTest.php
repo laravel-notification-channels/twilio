@@ -13,6 +13,7 @@ use NotificationChannels\Twilio\TwilioCallMessage;
 use NotificationChannels\Twilio\TwilioChannel;
 use NotificationChannels\Twilio\TwilioConfig;
 use NotificationChannels\Twilio\TwilioSmsMessage;
+use PHPUnit\Framework\Attributes\Test;
 use Twilio\Rest\Api\V2010\Account\CallInstance;
 use Twilio\Rest\Api\V2010\Account\CallList;
 use Twilio\Rest\Api\V2010\Account\MessageInstance;
@@ -42,7 +43,7 @@ class IntegrationTest extends MockeryTestCase
         $this->notification = Mockery::mock(Notification::class);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_a_sms_message()
     {
         $message = TwilioSmsMessage::create('Message text');
@@ -62,7 +63,7 @@ class IntegrationTest extends MockeryTestCase
         $channel->send(new NotifiableWithAttribute, $this->notification);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_a_sms_message_using_service()
     {
         $message = TwilioSmsMessage::create('Message text');
@@ -84,7 +85,7 @@ class IntegrationTest extends MockeryTestCase
         $channel->send(new NotifiableWithAttribute, $this->notification);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_a_sms_message_using_url_shortener()
     {
         $message = TwilioSmsMessage::create('Message text');
@@ -106,7 +107,7 @@ class IntegrationTest extends MockeryTestCase
         $channel->send(new NotifiableWithAttribute, $this->notification);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_send_a_sms_message_using_alphanumeric_sender()
     {
         $message = TwilioSmsMessage::create('Message text');
@@ -127,7 +128,7 @@ class IntegrationTest extends MockeryTestCase
         $channel->send(new NotifiableWithAlphanumericSender, $this->notification);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_make_a_call()
     {
         $message = TwilioCallMessage::create('http://example.com');
@@ -146,7 +147,7 @@ class IntegrationTest extends MockeryTestCase
         $channel->send(new NotifiableWithAttribute, $this->notification);
     }
 
-    /** @test */
+    #[Test]
     public function it_cant_make_a_call_when_the_from_config_is_missing()
     {
         $message = TwilioCallMessage::create('http://example.com');
