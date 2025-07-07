@@ -6,21 +6,16 @@ class TwilioContentTemplateMessage extends TwilioSmsMessage
 {
     /**
      * The SID of the content template (starting with H)
-     * @var null|string
      */
-    public $contentSid;
+    public ?string $contentSid;
 
     /**
      * The variables to replace in the content template
-     * @var null|array|string
      */
-    public $contentVariables;
+    public string|array|null $contentVariables;
 
     /**
      * Set the content sid (starting with H).
-     *
-     * @param  string $contentSid
-     * @return $this
      */
     public function contentSid(string $contentSid): self
     {
@@ -33,7 +28,6 @@ class TwilioContentTemplateMessage extends TwilioSmsMessage
      * Set the content variables.
      *
      * @param  array $contentVariables The variables to replace in the content template (i.e. ['1' => 'John Doe'])
-     * @return $this
      */
     public function contentVariables(array $contentVariables): self
     {

@@ -5,7 +5,7 @@
 [![Build Status](https://github.com/laravel-notification-channels/twilio/actions/workflows/ci.yml/badge.svg)](https://github.com/laravel-notification-channels/twilio/actions/workflows/ci.yml)
 [![Total Downloads](https://img.shields.io/packagist/dt/laravel-notification-channels/twilio.svg)](https://packagist.org/packages/laravel-notification-channels/twilio)
 
-This package makes it easy to send [Twilio notifications](https://documentation.twilio.com/docs) with Laravel 11.x
+This package makes it easy to send [Twilio notifications](https://documentation.twilio.com/docs) with Laravel 11.x / 12.x
 
 ## Contents
 
@@ -86,7 +86,7 @@ suppressed.
 
 ## Usage
 
-Now you can use the channel in your `via()` method inside the notification:
+Now you can use the channel in your `via()` method inside the notification to send an **SMS**:
 
 ``` php
 use NotificationChannels\Twilio\TwilioChannel;
@@ -108,7 +108,7 @@ class AccountApproved extends Notification
 }
 ```
 
-You can also send an MMS:
+You can also send an **MMS**:
 
 ``` php
 use NotificationChannels\Twilio\TwilioChannel;
@@ -131,7 +131,7 @@ class AccountApproved extends Notification
 }
 ```
 
-You can also send using Content Templates:
+You can also send using **Content Templates**:
 
 ``` php
 use NotificationChannels\Twilio\TwilioChannel;
@@ -157,9 +157,10 @@ class AccountApproved extends Notification
 }
 ```
 
-*Note: if sending via WhatsApp, you must add `whatsapp:` to the beginning of the phone number (i.e. `->from('whatsapp:+61428000382')`). The number must also be approved as a [WhatsApp Sender](https://www.twilio.com/console/sms/whatsapp/senders).*
+> [!NOTE]
+> If sending via WhatsApp, you must add `whatsapp:` to the beginning of the phone number (i.e. `->from('whatsapp:+61428000382')`). The number must also be approved as a [WhatsApp Sender](https://www.twilio.com/console/sms/whatsapp/senders).
 
-Or create a Twilio call:
+Or create a **Twilio Call Message**:
 
 ``` php
 use NotificationChannels\Twilio\TwilioChannel;
@@ -197,6 +198,15 @@ public function routeNotificationForTwilio()
 - `from('')`: Accepts a phone to use as the notification sender.
 - `content('')`: Accepts a string value for the notification body.
 - `messagingServiceSid('')`: Accepts a messaging service SID to handle configuration.
+
+#### TwilioMmsMessage
+
+- `mediaUrl('')`: Set the message media url.
+
+#### TwilioContentTemplateMessage
+
+- `contentSid('')`: Set the content sid (starting with H).
+- `contentVariables([...])`: Set the content variables.
 
 #### TwilioCallMessage
 
