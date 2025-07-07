@@ -131,6 +131,34 @@ class AccountApproved extends Notification
 }
 ```
 
+You can also send using Content Templates:
+
+``` php
+use NotificationChannels\Twilio\TwilioChannel;
+use NotificationChannels\Twilio\TwilioContentTemplateMessage;
+use Illuminate\Notifications\Notification;
+
+class AccountApproved extends Notification
+{
+    public function via($notifiable)
+    {
+        return [TwilioChannel::class];
+    }
+
+    public function toTwilio($notifiable)
+    {
+        return (new TwilioContentTemplateMessage())
+            ->contentSid("HXXXXXXXXXXXXXXXXXXXXXXXX")
+            ->contentVariables([
+                '1' => 'John Doe',
+                '2' => 'ACME Inc.',
+            ]);
+    }
+}
+```
+
+*Note: if sending via WhatsApp, you must add `whatsapp:` to the beginning of the phone number (i.e. `->from('whatsapp:+61428000382')`). The number must also be approved as a [WhatsApp Sender](https://www.twilio.com/console/sms/whatsapp/senders).*
+
 Or create a Twilio call:
 
 ``` php

@@ -89,6 +89,13 @@ class Twilio
             ]);
         }
 
+        if ($message instanceof TwilioContentTemplateMessage) {
+            $this->fillOptionalParams($params, $message, [
+                'contentSid',
+                'contentVariables',
+            ]);
+        }
+
         return $this->twilioService->messages->create($to, $params);
     }
 
