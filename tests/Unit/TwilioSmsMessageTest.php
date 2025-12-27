@@ -75,7 +75,6 @@ class TwilioSmsMessageTest extends TwilioMessageTestCase
         $message->scheduleType('fixed');
         $message->sendAt('2021-01-01 00:00:00');
         $message->sendAsMms(true);
-        $message->contentVariables('{"name": "John"}');
         $message->riskCheck('disable');
 
         $this->assertEquals('http://example.com', $message->statusCallback);
@@ -92,7 +91,6 @@ class TwilioSmsMessageTest extends TwilioMessageTestCase
         $this->assertEquals('fixed', $message->scheduleType);
         $this->assertEquals('2021-01-01 00:00:00', $message->sendAt);
         $this->assertEquals(true, $message->sendAsMms);
-        $this->assertEquals('{"name": "John"}', $message->contentVariables);
         $this->assertEquals('disable', $message->riskCheck);
     }
 }

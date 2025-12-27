@@ -34,8 +34,6 @@ class TwilioSmsMessage extends TwilioMessage
 
     public ?bool $sendAsMms = null;
 
-    public ?string $contentVariables = null;
-
     public ?string $riskCheck = null;
 
     /**
@@ -219,18 +217,6 @@ class TwilioSmsMessage extends TwilioMessage
     public function sendAsMms(bool $sendAsMms): self
     {
         $this->sendAsMms = $sendAsMms;
-
-        return $this;
-    }
-
-    /**
-     * For Content Editor/API only: Key-value pairs of Template variables and their substitution values.
-     * content_sid parameter must also be provided.
-     * If values are not defined in the content_variables parameter, the Template's default placeholder values are used.
-     */
-    public function contentVariables(string $contentVariables): self
-    {
-        $this->contentVariables = $contentVariables;
 
         return $this;
     }

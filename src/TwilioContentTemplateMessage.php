@@ -25,7 +25,9 @@ class TwilioContentTemplateMessage extends TwilioSmsMessage
     }
 
     /**
-     * Set the content variables.
+     * For Content Editor/API only: Key-value pairs of Template variables and their substitution values.
+     * content_sid parameter must also be provided.
+     * If values are not defined in the content_variables parameter, the Template's default placeholder values are used.
      *
      * @param  array $contentVariables The variables to replace in the content template (i.e. ['1' => 'John Doe'])
      */
