@@ -9,6 +9,8 @@ use Orchestra\Testbench\TestCase;
 
 class IntegrationTestCase extends TestCase
 {
+    protected static $latestResponse;
+
     protected function getPackageProviders($app)
     {
         return [TwilioProvider::class];
