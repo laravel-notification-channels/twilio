@@ -13,7 +13,8 @@ class Twilio
     public function __construct(
         protected TwilioService $twilioService,
         public TwilioConfig $config
-    ) {}
+    ) {
+    }
 
     /**
      * Send a TwilioMessage to a phone number.
@@ -89,7 +90,6 @@ class Twilio
             'scheduleType',
             'sendAt',
             'sendAsMms',
-            'contentVariables',
             'riskCheck',
         ]);
 
