@@ -175,7 +175,7 @@ class Twilio
     protected function fillOptionalParams(array &$params, TwilioMessage $message, array $optionalParams): self
     {
         foreach ($optionalParams as $optionalParam) {
-            if ($message->$optionalParam) {
+            if (property_exists($message, $optionalParam)) {
                 $params[$optionalParam] = $message->$optionalParam;
             }
         }
