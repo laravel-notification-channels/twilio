@@ -24,7 +24,7 @@ This package makes it easy to send [Twilio notifications](https://documentation.
 You can install the package via Composer:
 
 ``` bash
-$ composer require laravel-notification-channels/twilio
+composer require laravel-notification-channels/twilio
 ```
 
 ### Configuration
@@ -45,7 +45,12 @@ TWILIO_SHORTEN_URLS=true # optional, enable URL shortener
 
 ### Advanced configuration
 
-Run `php artisan vendor:publish --provider="NotificationChannels\Twilio\TwilioProvider"`
+You can publish the config file with:
+``` bash
+php artisan vendor:publish --provider="NotificationChannels\Twilio\TwilioProvider"
+```
+
+Here you can find the published config file:
 ```
 /config/twilio-notification-channel.php
 ```
